@@ -1,12 +1,12 @@
 //https://www.youtube.com/watch?v=pwkDaGbYuu8&ab_channel=TechiePraveen
 import 'dart:io';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
+//import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:kids_learning_tool/Quiz/DragDrop/itemModel.dart';
-import 'package:kids_learning_tool/Quiz/DragDrop/question.dart';
+//import 'package:kids_learning_tool/Quiz/DragDrop/question.dart';
 
 class Drag extends StatefulWidget {
   final List<ItemModel> items1;
