@@ -32,7 +32,7 @@ class _NounState extends State<Noun> {
   int activateIndex = 0;
 
   bool _isPlaying = false;
-  bool carouselAutoPlay = true;
+  bool carouselAutoPlay = false;
   bool _isPaused = true;
   //bool _isPaused = false;
   //bool _checkbox = false;
@@ -345,6 +345,7 @@ class _NounState extends State<Noun> {
     setState(() {
       _isPlaying = false;
       _isPaused = true;
+      carouselAutoPlay = false;
     });
   }
 
@@ -352,6 +353,7 @@ class _NounState extends State<Noun> {
     _audioPlayer.pause();
     setState(() {
       _isPaused = true;
+      carouselAutoPlay = false;
     });
   }
 
@@ -363,6 +365,7 @@ class _NounState extends State<Noun> {
     setState(() {
       _isPlaying = true;
       _isPaused = false;
+      carouselAutoPlay = true;
     });
     //}
   }
@@ -399,7 +402,7 @@ class _NounState extends State<Noun> {
                         initialPage: 0,
                         enlargeCenterPage: true,
                         enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        autoPlay: true,
+                        autoPlay: carouselAutoPlay,
                         //pageSnapping: false,
                         aspectRatio: 16 / 9,
                         autoPlayCurve: Curves.fastOutSlowIn,
@@ -412,10 +415,18 @@ class _NounState extends State<Noun> {
                         onPageChanged: (index, reason) {
                           setState(() {
                             //images = widget.name.getImgList();
+                            // if (index >= images.length)
+                            //   activateIndex = 0;
+                            // else
                             activateIndex = index;
+                            //print(activateIndex);
                           });
                         }),
                     itemBuilder: (context, index, realIndex) {
+                      if (index >= images.length) {
+                        index = 0;
+                        //print('called 22');
+                      }
                       final img = images[index];
 
                       return buildImage(img, index);
@@ -458,14 +469,15 @@ class _NounState extends State<Noun> {
                                   'Noun: ',
                                   style: TextStyle(
                                     fontSize: 24,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
+                                SizedBox(height: 10),
                                 Text(
                                   'Meaning:',
                                   style: TextStyle(
                                     fontSize: 24,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
@@ -474,8 +486,7 @@ class _NounState extends State<Noun> {
                         ),
                       ],
                     ),
-
-                    //const SizedBox(height: 10.0),
+                    const SizedBox(width: 20.0),
                     Column(
                       children: <Widget>[
                         IconButton(
@@ -522,76 +533,6 @@ class _NounState extends State<Noun> {
                 const Text('To be modified',
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                Row(
-                  children: <Widget>[
-                    ElevatedButton(
-                      onPressed: () {
-                        //print('prev');
-                        //print(_state?.processingState);
-                        //_audioPlayer.stop();
-                        stop();
-
-                        setState(() {
-                          //loading();
-
-                          _isPlaying = false;
-
-                          try {
-                            _index = (_index - 1) % len;
-                          } catch (e) {
-                            //print(e);
-                          }
-                          //print(_state?.processingState);
-                        });
-                      },
-                      child: const Icon(
-                        Icons.navigate_before,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        alignment: Alignment.center,
-                        minimumSize: const Size(50, 40),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    // IconButton(
-                    //     icon: (_isPlaying)
-                    //         ? const Icon(Icons.pause_circle_filled)
-                    //         : const Icon(Icons.play_circle_outline),
-                    //     iconSize: 40,
-                    //     onPressed: () {
-                    //       if (_isPlaying) {
-                    //         //print('---------is playing true-------');
-                    //         stop();
-                    //       } else {
-                    //         //print('-------is playing false-------');
-                    //         play();
-                    //       }
-                    //     }),
-                    const SizedBox(width: 30),
-                    ElevatedButton(
-                      onPressed: () {
-                        //print('next');
-                        //print(_state);
-                        //_audioPlayer.stop();
-                        stop();
-                        setState(() {
-                          //loading();
-
-                          try {
-                            _index = (_index + 1) % len;
-                          } catch (e) {
-                            //print(e);
-                          }
-                        });
-                      },
-                      child: const Icon(Icons.navigate_next_rounded),
-                      style: ElevatedButton.styleFrom(
-                        alignment: Alignment.center,
-                        minimumSize: const Size(50, 40),
-                      ),
-                    )
-                  ],
-                )
               ],
             ),
           ],
@@ -613,9 +554,10 @@ class _NounState extends State<Noun> {
   }
 
   Widget buildIndicator(List<String> images) => AnimatedSmoothIndicator(
-        activeIndex: activateIndex,
+        activeIndex: activateIndex % images.length,
         count: images.length,
-        effect: const SwapEffect(
+        effect: const JumpingDotEffect(
+          //SwapEffect
           activeDotColor: Colors.blue,
           dotColor: Colors.black12,
           dotHeight: 10,
@@ -722,3 +664,74 @@ class _NounState extends State<Noun> {
         });
   }
 }
+
+// Row(
+//   children: <Widget>[
+//     ElevatedButton(
+//       onPressed: () {
+//         //print('prev');
+//         //print(_state?.processingState);
+//         //_audioPlayer.stop();
+//         stop();
+
+//         setState(() {
+//           //loading();
+
+//           _isPlaying = false;
+
+//           try {
+//             _index = (_index - 1) % len;
+//           } catch (e) {
+//             //print(e);
+//           }
+//           //print(_state?.processingState);
+//         });
+//       },
+//       child: const Icon(
+//         Icons.navigate_before,
+//       ),
+//       style: ElevatedButton.styleFrom(
+//         alignment: Alignment.center,
+//         minimumSize: const Size(50, 40),
+//       ),
+//     ),
+//     const SizedBox(width: 30),
+//     // IconButton(
+//     //     icon: (_isPlaying)
+//     //         ? const Icon(Icons.pause_circle_filled)
+//     //         : const Icon(Icons.play_circle_outline),
+//     //     iconSize: 40,
+//     //     onPressed: () {
+//     //       if (_isPlaying) {
+//     //         //print('---------is playing true-------');
+//     //         stop();
+//     //       } else {
+//     //         //print('-------is playing false-------');
+//     //         play();
+//     //       }
+//     //     }),
+//     const SizedBox(width: 30),
+//     ElevatedButton(
+//       onPressed: () {
+//         //print('next');
+//         //print(_state);
+//         //_audioPlayer.stop();
+//         stop();
+//         setState(() {
+//           //loading();
+
+//           try {
+//             _index = (_index + 1) % len;
+//           } catch (e) {
+//             //print(e);
+//           }
+//         });
+//       },
+//       child: const Icon(Icons.navigate_next_rounded),
+//       style: ElevatedButton.styleFrom(
+//         alignment: Alignment.center,
+//         minimumSize: const Size(50, 40),
+//       ),
+//     )
+//   ],
+// )
