@@ -443,21 +443,35 @@ class _NounState extends State<Noun> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    Checkbox(
+                        value: name.isSelected,
+                        onChanged: (value) {
+                          setState(() {
+                            name.isSelected = !name.isSelected;
+                            if (name.isSelected) {
+                              assignToStudent.add(names[_index]);
+                            } else {
+                              assignToStudent.remove(names[_index]);
+                            }
+                          });
+                        }),
+                    const SizedBox(
+                        width: 300), //Spacer(), //const SizedBox(height: 20.0),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            nameList.removeItem(name.text);
+                          });
+                        },
+                        icon: const Icon(Icons.delete_forever_rounded)),
+                    //const SizedBox(height: 20.0),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Checkbox(
-                            value: name.isSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                name.isSelected = !name.isSelected;
-                                if (name.isSelected) {
-                                  assignToStudent.add(names[_index]);
-                                } else {
-                                  assignToStudent.remove(names[_index]);
-                                }
-                              });
-                            }),
-                        const SizedBox(height: 20.0),
                         Card(
                           color: Colors.white,
                           child: Padding(
@@ -489,14 +503,6 @@ class _NounState extends State<Noun> {
                     const SizedBox(width: 20.0),
                     Column(
                       children: <Widget>[
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                nameList.removeItem(name.text);
-                              });
-                            },
-                            icon: const Icon(Icons.delete_forever_rounded)),
-                        const SizedBox(height: 20.0),
                         Card(
                           //margin: const EdgeInsets.all(122.0),
                           color: Colors.blue[400],
