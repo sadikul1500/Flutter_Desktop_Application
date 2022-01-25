@@ -417,90 +417,172 @@ class _NounState extends State<Noun> {
                 buildIndicator(images),
               ],
             ),
-
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Card(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const <Widget>[
-                        Text(
-                          'Noun: ',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Text(
-                          'Meaning:',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 22.0),
-                Checkbox(
-                    value: name.isSelected,
-                    onChanged: (value) {
-                      setState(() {
-                        name.isSelected = !name.isSelected;
-                        if (name.isSelected) {
-                          assignToStudent.add(names[_index]);
-                        } else {
-                          assignToStudent.remove(names[_index]);
-                        }
-                      });
-                    }),
-              ],
-            ),
-
-            //const SizedBox(height: 10.0),
-            Column(
-              children: <Widget>[
-                Card(
-                  //margin: const EdgeInsets.all(122.0),
-                  color: Colors.blue[400],
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
                       children: <Widget>[
-                        Text(
-                          name.text,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          name.meaning,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
+                        Checkbox(
+                            value: name.isSelected,
+                            onChanged: (value) {
+                              setState(() {
+                                name.isSelected = !name.isSelected;
+                                if (name.isSelected) {
+                                  assignToStudent.add(names[_index]);
+                                } else {
+                                  assignToStudent.remove(names[_index]);
+                                }
+                              });
+                            }),
+                        const SizedBox(height: 20.0),
+                        Card(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: const <Widget>[
+                                Text(
+                                  'Noun: ',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  'Meaning:',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
+
+                    //const SizedBox(height: 10.0),
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                nameList.removeItem(name.text);
+                              });
+                            },
+                            icon: const Icon(Icons.delete_forever_rounded)),
+                        const SizedBox(height: 20.0),
+                        Card(
+                          //margin: const EdgeInsets.all(122.0),
+                          color: Colors.blue[400],
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                  name.text,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  name.meaning,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20.0),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        nameList.removeItem(name.text);
-                      });
-                    },
-                    icon: const Icon(Icons.delete_forever_rounded))
+                const Text('To be modified',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                Row(
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () {
+                        //print('prev');
+                        //print(_state?.processingState);
+                        //_audioPlayer.stop();
+                        stop();
+
+                        setState(() {
+                          //loading();
+
+                          _isPlaying = false;
+
+                          try {
+                            _index = (_index - 1) % len;
+                          } catch (e) {
+                            //print(e);
+                          }
+                          //print(_state?.processingState);
+                        });
+                      },
+                      child: const Icon(
+                        Icons.navigate_before,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        alignment: Alignment.center,
+                        minimumSize: const Size(50, 40),
+                      ),
+                    ),
+                    const SizedBox(width: 30),
+                    IconButton(
+                        icon: (_isPlaying)
+                            ? const Icon(Icons.pause_circle_filled)
+                            : const Icon(Icons.play_circle_outline),
+                        iconSize: 40,
+                        onPressed: () {
+                          if (_isPlaying) {
+                            //print('---------is playing true-------');
+                            stop();
+                          } else {
+                            //print('-------is playing false-------');
+                            play();
+                          }
+                        }),
+                    const SizedBox(width: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        //print('next');
+                        //print(_state);
+                        //_audioPlayer.stop();
+                        stop();
+                        setState(() {
+                          //loading();
+
+                          try {
+                            _index = (_index + 1) % len;
+                          } catch (e) {
+                            //print(e);
+                          }
+                        });
+                      },
+                      child: const Icon(Icons.navigate_next_rounded),
+                      style: ElevatedButton.styleFrom(
+                        alignment: Alignment.center,
+                        minimumSize: const Size(50, 40),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ],
