@@ -32,6 +32,8 @@ class _NounState extends State<Noun> {
   int activateIndex = 0;
 
   bool _isPlaying = false;
+  bool carouselAutoPlay = true;
+  bool _isPaused = true;
   //bool _isPaused = false;
   //bool _checkbox = false;
 
@@ -237,14 +239,14 @@ class _NounState extends State<Noun> {
                   ),
                   const SizedBox(width: 30),
                   IconButton(
-                      icon: (_isPlaying)
-                          ? const Icon(Icons.pause_circle_filled)
-                          : const Icon(Icons.play_circle_outline),
+                      icon: (_isPaused)
+                          ? const Icon(Icons.play_circle_outline)
+                          : const Icon(Icons.pause_circle_filled),
                       iconSize: 40,
                       onPressed: () {
-                        if (_isPlaying) {
+                        if (!_isPaused) {
                           //print('---------is playing true-------');
-                          stop();
+                          pause(); //stop()
                         } else {
                           //print('-------is playing false-------');
                           play();
@@ -342,18 +344,25 @@ class _NounState extends State<Noun> {
     await _audioPlayer.stop();
     setState(() {
       _isPlaying = false;
-      //_isPaused = true;
+      _isPaused = true;
+    });
+  }
+
+  pause() {
+    _audioPlayer.pause();
+    setState(() {
+      _isPaused = true;
     });
   }
 
   Future play() async {
     //print('play called and ............................');
     //print(_state?.processingState);
-    await _audioPlayer.play();
+    _audioPlayer.play();
     // if (result == 1) {
     setState(() {
       _isPlaying = true;
-      //_isPaused = false;
+      _isPaused = false;
     });
     //}
   }
@@ -544,20 +553,20 @@ class _NounState extends State<Noun> {
                       ),
                     ),
                     const SizedBox(width: 30),
-                    IconButton(
-                        icon: (_isPlaying)
-                            ? const Icon(Icons.pause_circle_filled)
-                            : const Icon(Icons.play_circle_outline),
-                        iconSize: 40,
-                        onPressed: () {
-                          if (_isPlaying) {
-                            //print('---------is playing true-------');
-                            stop();
-                          } else {
-                            //print('-------is playing false-------');
-                            play();
-                          }
-                        }),
+                    // IconButton(
+                    //     icon: (_isPlaying)
+                    //         ? const Icon(Icons.pause_circle_filled)
+                    //         : const Icon(Icons.play_circle_outline),
+                    //     iconSize: 40,
+                    //     onPressed: () {
+                    //       if (_isPlaying) {
+                    //         //print('---------is playing true-------');
+                    //         stop();
+                    //       } else {
+                    //         //print('-------is playing false-------');
+                    //         play();
+                    //       }
+                    //     }),
                     const SizedBox(width: 30),
                     ElevatedButton(
                       onPressed: () {
