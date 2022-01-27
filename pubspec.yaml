@@ -40,6 +40,7 @@ dependencies:
   flutter_animated_dialog: ^2.0.1
   font_awesome_flutter: ^9.2.0
   assets_audio_player: ^3.0.3+9
+  confetti: ^0.6.0
 
 
   #kplayer: ^0.1.11

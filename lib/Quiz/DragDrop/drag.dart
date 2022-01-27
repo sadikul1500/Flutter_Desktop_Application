@@ -1,7 +1,9 @@
 //https://www.youtube.com/watch?v=pwkDaGbYuu8&ab_channel=TechiePraveen
 import 'dart:io';
+import 'dart:math';
 
 //import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
@@ -25,6 +27,8 @@ class _DragState extends State<Drag> {
   //int total = 0;
   bool gameOver = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
+  late ConfettiController _confettiController;
+
   //final assetsAudioPlayer = AssetsAudioPlayer();
 
   @override
@@ -36,6 +40,7 @@ class _DragState extends State<Drag> {
   @override
   void dispose() {
     _audioPlayer.dispose();
+    _confettiController.dispose();
     super.dispose();
   }
 
@@ -43,6 +48,7 @@ class _DragState extends State<Drag> {
     score = 0;
     gameOver = false;
     _audioPlayer.setAsset('assets/Audios/win.wav');
+    _confettiController = ConfettiController();
     // items = [
     //   ItemModel('Coffee', 'Coffee', FontAwesomeIcons.coffee),
     //   ItemModel('Apple', 'Apple', FontAwesomeIcons.apple),
@@ -58,10 +64,35 @@ class _DragState extends State<Drag> {
     //total = items.length;
   }
 
+  Path drawStar(Size size) {
+    // Method to convert degree to radians
+    double degToRad(double deg) => deg * (pi / 180.0);
+
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(halfWidth + externalRadius * cos(step),
+          halfWidth + externalRadius * sin(step));
+      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    }
+    path.close();
+    return path;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (score == widget.items1.length + score) {
       gameOver = true;
+      _confettiController.play();
     }
     return Scaffold(
       //backgroundColor: Colors.amber[300],
@@ -205,6 +236,26 @@ class _DragState extends State<Drag> {
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         )),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.center,
+                      child: ConfettiWidget(
+                        confettiController: _confettiController,
+                        blastDirectionality: BlastDirectionality
+                            .explosive, // don't specify a direction, blast randomly
+                        shouldLoop:
+                            true, // start again as soon as the animation is finished
+                        colors: const [
+                          Colors.green,
+                          Colors.blue,
+                          Colors.pink,
+                          Colors.orange,
+                          Colors.purple
+                        ], // manually specify the colors to be used
+                        createParticlePath:
+                            drawStar, // define a custom shape/path.
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     Center(
                       child: ElevatedButton(
