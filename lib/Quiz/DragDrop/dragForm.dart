@@ -59,6 +59,8 @@ class DragFormState extends State<MyStatefulWidget> {
     _nameController = TextEditingController();
     _valueController = TextEditingController();
     _questionController = TextEditingController();
+    _questionController.text =
+        'Drag the object from left side and match them to the right side';
   }
 
   @override

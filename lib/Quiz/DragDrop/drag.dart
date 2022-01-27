@@ -28,6 +28,8 @@ class _DragState extends State<Drag> {
   bool gameOver = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
   late ConfettiController _confettiController;
+  bool _isPlaying = false;
+  PlayerState? _state;
 
   //final assetsAudioPlayer = AssetsAudioPlayer();
 
@@ -170,6 +172,7 @@ class _DragState extends State<Drag> {
                               if (item.value ==
                                   receivedItem.value.split(' ').last) {
                                 setState(() {
+                                  //async
                                   //_audioPlayer.seek(Duration.zero);
                                   //receivedItem.icon = FontAwesomeIcons.check;
                                   //item.name = 'Correct!';
@@ -183,7 +186,27 @@ class _DragState extends State<Drag> {
                                   //   print(e);
                                   // }
                                   //_audioPlayer.setAsset('assets/Audios/win.wav');
+                                  //_isPlaying = true;
+                                  // if (!_isPlaying) {
+                                  //   _audioPlayer.stop();
+                                  //   _isPlaying = true;
+                                  //   print(_state?.processingState !=
+                                  //       ProcessingState.ready);
+                                  // }
+                                  // if (_isPlaying) {
+                                  //   print(_state?.processingState !=
+                                  //       ProcessingState.ready);
+                                  //   _audioPlayer.play();
+                                  //   _isPlaying = false;
+                                  // }
+                                  // Future.delayed(
+                                  //     const Duration(microseconds: 500));
+                                  //_audioPlayer.stop();
+                                  // }
+                                  print(_state?.processingState !=
+                                      ProcessingState.ready);
                                   _audioPlayer.play();
+
                                   widget.items1.remove(receivedItem);
                                   //items2.remove(item);
                                   //dispose();
