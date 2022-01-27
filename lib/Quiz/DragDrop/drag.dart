@@ -205,6 +205,7 @@ class _DragState extends State<Drag> {
                                   // }
                                   print(_state?.processingState !=
                                       ProcessingState.ready);
+                                  //_audioPlayer.stop();
                                   _audioPlayer.play();
 
                                   widget.items1.remove(receivedItem);
