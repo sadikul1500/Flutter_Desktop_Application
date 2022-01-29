@@ -36,7 +36,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class DragFormState extends State<MyStatefulWidget> {
-  static List<String> friendsList = [];
+  List<String> friendsList = [];
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _valueController;
@@ -390,6 +390,8 @@ class DragFormState extends State<MyStatefulWidget> {
           });
         } else {
           friendsList.removeAt(index);
+          files.removeAt(index);
+          values.removeAt(index);
         }
         setState(() {});
       },

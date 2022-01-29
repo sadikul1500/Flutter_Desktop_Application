@@ -39,17 +39,20 @@ class _DragState extends State<Drag> {
     initDrag();
   }
 
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    _confettiController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _audioPlayer.dispose();
+  //   _confettiController.dispose();
+  //   super.dispose();
+  // }
 
   initDrag() {
     score = 0;
     gameOver = false;
-    _audioPlayer.setAsset('assets/Audios/win.wav');
+    _audioPlayer.setAsset('assets/Audios/win.wav', preload: true);
+    print(10);
+
+    ///_audioPlayer.
     _confettiController = ConfettiController();
     // items = [
     //   ItemModel('Coffee', 'Coffee', FontAwesomeIcons.coffee),
@@ -168,9 +171,11 @@ class _DragState extends State<Drag> {
                         return Container(
                           margin: const EdgeInsets.fromLTRB(25, 10, 100, 8.0),
                           child: DragTarget<ItemModel>(
-                            onAccept: (receivedItem) {
+                            onAccept: (receivedItem) async {
                               if (item.value ==
                                   receivedItem.value.split(' ').last) {
+                                //_audioPlayer.stop();
+                                _audioPlayer.play();
                                 setState(() {
                                   //async
                                   //_audioPlayer.seek(Duration.zero);
@@ -203,17 +208,23 @@ class _DragState extends State<Drag> {
                                   //     const Duration(microseconds: 500));
                                   //_audioPlayer.stop();
                                   // }
-                                  print(_state?.processingState !=
-                                      ProcessingState.ready);
+                                  // try {
+                                  //   await _audioPlayer.stop();
+                                  // } catch (e) {
+                                  //   throw Exception(e);
+                                  // }
+                                  // print(_state?.processingState !=
+                                  //     ProcessingState.ready);
                                   //_audioPlayer.stop();
-                                  _audioPlayer.play();
 
                                   widget.items1.remove(receivedItem);
                                   //items2.remove(item);
                                   //dispose();
                                   score += 1;
                                   item.accepting = false;
+                                  //_audioPlayer.dispose();
                                 });
+                                //_audioPlayer.stop();
                               } else {
                                 setState(() {
                                   //score -= 1;
@@ -224,11 +235,13 @@ class _DragState extends State<Drag> {
                             onLeave: (receivedItem) {
                               setState(() {
                                 item.accepting = false;
+                                //_audioPlayer.stop();
                               });
                             },
                             onWillAccept: (receivedItem) {
                               setState(() {
                                 item.accepting = true;
+                                //_audioPlayer.stop();
                               });
                               return true;
                             },
