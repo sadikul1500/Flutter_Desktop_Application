@@ -44,6 +44,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   List<bool> hasPressed = [false, false, false, false];
   //bool hasPressedB, hasPressedC, hasPressedD = false, false, false, false;
   List<bool> isCorrect = [false, false, false, false];
+  bool hasAnswered = false;
 
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -115,24 +116,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _timer.cancel();
-                                hasPressed[0] = true;
+                                if (!hasAnswered) {
+                                  hasPressed[0] = true;
+                                  hasAnswered = true;
 
-                                if (widget.question.correctAnswer == 'A') {
-                                  setState(() {
-                                    isCorrect[0] = true;
-                                    popup('Congratulations',
-                                        'Wooha!!!! You have given correct answer');
-                                  });
-                                } else {
-                                  popup('Wrong answer',
-                                      'You have selected the wrong option');
-                                  int index = widget
-                                          .question.correctAnswer.codeUnits[0] -
-                                      'A'.codeUnits[0];
-                                  setState(() {
-                                    isCorrect[index] = true;
-                                    hasPressed[index] = true;
-                                  });
+                                  if (widget.question.correctAnswer == 'A') {
+                                    setState(() {
+                                      isCorrect[0] = true;
+                                      popup('Congratulations',
+                                          'Wooha!!!! You have given correct answer');
+                                    });
+                                  } else {
+                                    popup('Wrong answer',
+                                        'You have selected the wrong option');
+                                    int index = widget.question.correctAnswer
+                                            .codeUnits[0] -
+                                        'A'.codeUnits[0];
+                                    setState(() {
+                                      isCorrect[index] = true;
+                                      hasPressed[index] = true;
+                                    });
+                                  }
                                 }
                               },
                               child: Text('A. ' + widget.question.options[0],
@@ -157,23 +161,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _timer.cancel();
-                                hasPressed[1] = true;
-                                if (widget.question.correctAnswer == 'B') {
-                                  setState(() {
-                                    isCorrect[1] = true;
-                                    popup('Congratulations',
-                                        'Wooha!!!! You have given correct answer');
-                                  });
-                                } else {
-                                  popup('Wrong answer',
-                                      'You have selected the wrong option');
-                                  int index = widget
-                                          .question.correctAnswer.codeUnits[0] -
-                                      'A'.codeUnits[0];
-                                  setState(() {
-                                    isCorrect[index] = true;
-                                    hasPressed[index] = true;
-                                  });
+                                if (!hasAnswered) {
+                                  hasPressed[1] = true;
+                                  hasAnswered = true;
+                                  if (widget.question.correctAnswer == 'B') {
+                                    setState(() {
+                                      isCorrect[1] = true;
+                                      popup('Congratulations',
+                                          'Wooha!!!! You have given correct answer');
+                                    });
+                                  } else {
+                                    popup('Wrong answer',
+                                        'You have selected the wrong option');
+                                    int index = widget.question.correctAnswer
+                                            .codeUnits[0] -
+                                        'A'.codeUnits[0];
+                                    setState(() {
+                                      isCorrect[index] = true;
+                                      hasPressed[index] = true;
+                                    });
+                                  }
                                 }
                               },
                               child: Text('B. ' + widget.question.options[1],
@@ -203,23 +210,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _timer.cancel();
-                                hasPressed[2] = true;
-                                if (widget.question.correctAnswer == 'C') {
-                                  setState(() {
-                                    isCorrect[2] = true;
-                                    popup('Congratulations',
-                                        'Wooha!!!! You have given correct answer');
-                                  });
-                                } else {
-                                  popup('Wrong answer',
-                                      'You have selected the wrong option');
-                                  int index = widget
-                                          .question.correctAnswer.codeUnits[0] -
-                                      'A'.codeUnits[0];
-                                  setState(() {
-                                    isCorrect[index] = true;
-                                    hasPressed[index] = true;
-                                  });
+                                if (!hasAnswered) {
+                                  hasPressed[2] = true;
+                                  hasAnswered = true;
+                                  if (widget.question.correctAnswer == 'C') {
+                                    setState(() {
+                                      isCorrect[2] = true;
+                                      popup('Congratulations',
+                                          'Wooha!!!! You have given correct answer');
+                                    });
+                                  } else {
+                                    popup('Wrong answer',
+                                        'You have selected the wrong option');
+                                    int index = widget.question.correctAnswer
+                                            .codeUnits[0] -
+                                        'A'.codeUnits[0];
+                                    setState(() {
+                                      isCorrect[index] = true;
+                                      hasPressed[index] = true;
+                                    });
+                                  }
                                 }
                               },
                               child: Text('C. ' + widget.question.options[2],
@@ -244,24 +254,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             child: ElevatedButton(
                               onPressed: () {
                                 _timer.cancel();
-                                hasPressed[3] = true;
-                                if (widget.question.correctAnswer == 'D') {
-                                  setState(() {
-                                    isCorrect[3] = true;
-                                    popup('Congratulations',
-                                        'Wooha!!!! You have given correct answer');
-                                  });
-                                } else {
-                                  popup('Wrong answer',
-                                      'You have selected the wrong option');
-                                  int index = widget
-                                          .question.correctAnswer.codeUnits[0] -
-                                      'A'.codeUnits[0];
-                                  setState(() {
-                                    //isCorrect[3] = false;
-                                    isCorrect[index] = true;
-                                    hasPressed[index] = true;
-                                  });
+                                if (!hasAnswered) {
+                                  hasPressed[3] = true;
+                                  hasAnswered = true;
+                                  if (widget.question.correctAnswer == 'D') {
+                                    setState(() {
+                                      isCorrect[3] = true;
+                                      popup('Congratulations',
+                                          'Wooha!!!! You have given correct answer');
+                                    });
+                                  } else {
+                                    popup('Wrong answer',
+                                        'You have selected the wrong option');
+                                    int index = widget.question.correctAnswer
+                                            .codeUnits[0] -
+                                        'A'.codeUnits[0];
+                                    setState(() {
+                                      //isCorrect[3] = false;
+                                      isCorrect[index] = true;
+                                      hasPressed[index] = true;
+                                    });
+                                  }
                                 }
                               },
                               child: Text('D. ' + widget.question.options[3],

@@ -177,46 +177,6 @@ class _DragState extends State<Drag> {
                                 //_audioPlayer.stop();
                                 _audioPlayer.play();
                                 setState(() {
-                                  //async
-                                  //_audioPlayer.seek(Duration.zero);
-                                  //receivedItem.icon = FontAwesomeIcons.check;
-                                  //item.name = 'Correct!';
-                                  //item.value = '#x';
-                                  // try {
-                                  //   assetsAudioPlayer.open(
-                                  //     Audio("assets/Audios/win.wav"),
-                                  //     autoStart: true,
-                                  //   );
-                                  // } catch (e) {
-                                  //   print(e);
-                                  // }
-                                  //_audioPlayer.setAsset('assets/Audios/win.wav');
-                                  //_isPlaying = true;
-                                  // if (!_isPlaying) {
-                                  //   _audioPlayer.stop();
-                                  //   _isPlaying = true;
-                                  //   print(_state?.processingState !=
-                                  //       ProcessingState.ready);
-                                  // }
-                                  // if (_isPlaying) {
-                                  //   print(_state?.processingState !=
-                                  //       ProcessingState.ready);
-                                  //   _audioPlayer.play();
-                                  //   _isPlaying = false;
-                                  // }
-                                  // Future.delayed(
-                                  //     const Duration(microseconds: 500));
-                                  //_audioPlayer.stop();
-                                  // }
-                                  // try {
-                                  //   await _audioPlayer.stop();
-                                  // } catch (e) {
-                                  //   throw Exception(e);
-                                  // }
-                                  // print(_state?.processingState !=
-                                  //     ProcessingState.ready);
-                                  //_audioPlayer.stop();
-
                                   widget.items1.remove(receivedItem);
                                   //items2.remove(item);
                                   //dispose();
@@ -510,3 +470,43 @@ class _DragState extends State<Drag> {
 //       required this.icon,
 //       this.accepting = false});
 // }
+
+//async
+//_audioPlayer.seek(Duration.zero);
+//receivedItem.icon = FontAwesomeIcons.check;
+//item.name = 'Correct!';
+//item.value = '#x';
+// try {
+//   assetsAudioPlayer.open(
+//     Audio("assets/Audios/win.wav"),
+//     autoStart: true,
+//   );
+// } catch (e) {
+//   print(e);
+// }
+//_audioPlayer.setAsset('assets/Audios/win.wav');
+//_isPlaying = true;
+// if (!_isPlaying) {
+//   _audioPlayer.stop();
+//   _isPlaying = true;
+//   print(_state?.processingState !=
+//       ProcessingState.ready);
+// }
+// if (_isPlaying) {
+//   print(_state?.processingState !=
+//       ProcessingState.ready);
+//   _audioPlayer.play();
+//   _isPlaying = false;
+// }
+// Future.delayed(
+//     const Duration(microseconds: 500));
+//_audioPlayer.stop();
+// }
+// try {
+//   await _audioPlayer.stop();
+// } catch (e) {
+//   throw Exception(e);
+// }
+// print(_state?.processingState !=
+//     ProcessingState.ready);
+//_audioPlayer.stop();
