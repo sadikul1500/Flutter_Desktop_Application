@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 //import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +30,7 @@ class _DragState extends State<Drag> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   late ConfettiController _confettiController;
   bool _isPlaying = false;
-  PlayerState? _state;
+  //PlayerState? _state;
 
   //final assetsAudioPlayer = AssetsAudioPlayer();
 
@@ -50,23 +51,12 @@ class _DragState extends State<Drag> {
     score = 0;
     gameOver = false;
     _audioPlayer.setAsset('assets/Audios/win.wav', preload: true);
-    print(10);
 
     ///_audioPlayer.
     _confettiController = ConfettiController();
-    // items = [
-    //   ItemModel('Coffee', 'Coffee', FontAwesomeIcons.coffee),
-    //   ItemModel('Apple', 'Apple', FontAwesomeIcons.apple),
-    //   ItemModel('Calender', 'Calender', FontAwesomeIcons.calendar),
-    //   ItemModel('Bus', 'Bus', FontAwesomeIcons.bus),
-    // ];
-    // items2 = List<ItemModel>.from(items);
+
     widget.items1.shuffle();
     widget.items2.shuffle();
-
-    // items.shuffle();
-    // items2.shuffle();
-    //total = items.length;
   }
 
   Path drawStar(Size size) {
@@ -98,6 +88,7 @@ class _DragState extends State<Drag> {
     if (score == widget.items1.length + score) {
       gameOver = true;
       _confettiController.play();
+      //_audioPlayer.play(loopmode: LoopMode.one);
     }
     return Scaffold(
       //backgroundColor: Colors.amber[300],
@@ -255,22 +246,33 @@ class _DragState extends State<Drag> {
                     ),
                     const SizedBox(height: 20),
                     Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(100, 60), elevation: 3),
-                        child: const Text(
-                          'Try Again',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          initDrag();
-                          setState(() {});
-                        },
-                      ),
-                    )
+                      child: SizedBox(
+                          height: 200,
+                          width: 250,
+                          child: Image.file(
+                            File(
+                                'D:/Sadi/FlutterProjects/kids_learning_tool/assets/Rewards/congrats2.gif'),
+                            fit: BoxFit.contain,
+                            filterQuality: FilterQuality.high,
+                          )),
+                    ),
+                    // Center(
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //         minimumSize: const Size(100, 60), elevation: 3),
+                    //     child: const Text(
+                    //       'Try Again',
+                    //       style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold),
+                    //     ),
+                    //     onPressed: () {
+                    //       initDrag();
+                    //       setState(() {});
+                    //     },
+                    //   ),
+                    // )
                   ],
                 )
             ],
