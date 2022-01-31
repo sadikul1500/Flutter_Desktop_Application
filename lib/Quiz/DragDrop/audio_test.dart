@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:kids_learning_tool/Services/test_firestore.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,12 +12,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late AudioPlayer player;
+  DbService db = DbService();
   //late AssetsAudioPlayer audioPlayer;
   @override
   void initState() {
     super.initState();
-    player = AudioPlayer();
-    player.setAsset('assets/Audios/win.wav');
+    // player = AudioPlayer();
+    // player.setAsset('assets/Audios/win.wav');
   }
 
   @override
@@ -43,12 +45,17 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   //async
                   // await player.setAsset('assets/Audios/win.wav');
-                  if (player.playing) player.stop();
-                  if (!player.playing) player.play();
+                  // if (player.playing) player.stop();
+                  // if (!player.playing) player.play();
+
                   //playSound();
+                  await db.updateNoun('Umbrella', 'ছাতা');
+                  await db.updateNoun('Ants', 'পিঁপড়া');
+                  await db.updateNoun('Mango', 'আম');
+                  await db.updateNoun('Pen', 'কলম');
                 },
                 child: const Text('Win'),
               ),
