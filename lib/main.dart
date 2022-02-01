@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 //import 'package:just_audio/just_audio.dart';
 import 'package:kids_learning_tool/Home/home.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun_form.dart';
+import 'package:kids_learning_tool/Model/noun_list.dart';
 import 'package:kids_learning_tool/Quiz/DragDrop/audio_test.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/audioTest.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/drag.dart';
@@ -18,12 +20,13 @@ import 'Quiz/Matching/matching.dart';
 //import 'package:kplayer/kplayer.dart';
 
 Future<void> main() async {
-  const projectId = 'crested-plexus-330007';
   LWM.initialize();
   //AudioPlayer.setMockInitialValues({});
   WidgetsFlutterBinding.ensureInitialized();
-  
-  Firestore.initialize(projectId);
+  await Hive.initFlutter();
+  Hive.registerAdapter(NounItemAdapter());
+  await Hive.openBox<NounItem>('nouns');
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/home',
@@ -38,3 +41,7 @@ Future<void> main() async {
     },
   ));
 }
+
+
+//const projectId = 'crested-plexus-330007';
+//Firestore.initialize(projectId);
