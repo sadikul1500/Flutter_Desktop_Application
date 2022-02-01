@@ -20,7 +20,7 @@ class NounItem extends HiveObject {
   bool isSelected = false;
   List<String> imgList = [];
 
-  NounItem() {
+  NounItem(this.text, this.meaning, this.dir, this.audio) {
     listDir(dir).then((data) {
       imgList = data;
     });

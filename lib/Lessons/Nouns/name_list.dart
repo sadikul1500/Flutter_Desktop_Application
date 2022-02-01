@@ -1,6 +1,6 @@
-import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
+//import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
 //import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:kids_learning_tool/Model/noun_list.dart';
 import 'package:kids_learning_tool/boxes.dart';
@@ -22,12 +22,11 @@ class NameList {
   }
 
   Future addNoun(String text, String meaning, String dir, String audio) async {
-    final name = NounItem()
-      ..text = text
-      ..meaning = meaning
-      ..dir = dir
-      ..audio = audio;
-
+    final name = NounItem(text, meaning, dir, audio);
+// ..text = text
+//       ..meaning = meaning
+//       ..dir = dir
+//       ..audio = audio
     box.add(name);
   }
 
