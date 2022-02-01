@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firedart/firedart.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 //import 'package:just_audio/just_audio.dart';
@@ -21,7 +21,7 @@ import 'Quiz/Matching/matching.dart';
 
 Future<void> main() async {
   LWM.initialize();
-  //AudioPlayer.setMockInitialValues({});
+
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(NounItemAdapter());
@@ -37,7 +37,6 @@ Future<void> main() async {
       '/quiz': (context) => Quiz(),
       '/matching': (context) => Matching(),
       '/drag': (context) => MyApp(), //DragForm(),
-      //'/preview': (context) => Preview(question);
     },
   ));
 }
@@ -45,3 +44,5 @@ Future<void> main() async {
 
 //const projectId = 'crested-plexus-330007';
 //Firestore.initialize(projectId);
+//AudioPlayer.setMockInitialValues({});
+//'/preview': (context) => Preview(question);

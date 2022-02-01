@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/name_list.dart';
-import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
+//import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
+import 'package:kids_learning_tool/Model/noun_list.dart';
+
 //import 'package:kids_learning_tool/Lessons/Nouns/noun.dart';
 //thanks Ryan
 class CustomDelegate extends SearchDelegate<String> {
   NameList nameList = NameList();
   List<String> data = [];
-  List<Name> names = [];
+  List<NounItem> names = [];
   //Noun nouns = Noun();
 
   CustomDelegate(this.names) {
@@ -16,7 +18,7 @@ class CustomDelegate extends SearchDelegate<String> {
     // });
     //names = nouns.names
     // print(names.length);
-    for (Name name in names) {
+    for (NounItem name in names) {
       data.add(name.text);
     }
     // print(data);

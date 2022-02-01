@@ -11,6 +11,7 @@ import 'package:kids_learning_tool/Lessons/Nouns/name_list.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
 //import 'package:kids_learning_tool/Lessons/Nouns/noun_card.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun_search_bar.dart';
+import 'package:kids_learning_tool/Model/noun_list.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 //import 'package:kplayer/kplayer.dart';
 
@@ -21,8 +22,8 @@ class Noun extends StatefulWidget {
 
 class _NounState extends State<Noun> {
   NameList nameList = NameList();
-  late List<Name> names;
-  List<Name> assignToStudent = [];
+  late List<NounItem> names;
+  List<NounItem> assignToStudent = [];
   int _index = 0;
   late int len;
   List<String> imageList = [];
@@ -371,7 +372,7 @@ class _NounState extends State<Noun> {
   }
 
   Widget nounCardWidget() {
-    Name name = names.elementAt(_index);
+    NounItem name = names.elementAt(_index);
     List<String> images = name.getImgList();
     //print('noun card widget');
     //print(_index);
@@ -460,7 +461,7 @@ class _NounState extends State<Noun> {
                     IconButton(
                         onPressed: () {
                           setState(() {
-                            nameList.removeItem(name.text);
+                            nameList.removeItem(name);
                           });
                         },
                         icon: const Icon(Icons.delete_forever_rounded)),
@@ -605,14 +606,14 @@ class _NounState extends State<Noun> {
   }
 
   Future<void> copyAudio(String destination) async {
-    for (Name name in assignToStudent) {
+    for (NounItem name in assignToStudent) {
       File file = File(name.audio);
       await file.copy(destination + '/${file.path.split('/').last}');
     }
   }
 
   Future<void> copyImage(String destination) async {
-    for (Name name in assignToStudent) {
+    for (NounItem name in assignToStudent) {
       String folder = name.dir.split('/').last;
       final newDir =
           await Directory(destination + '/$folder').create(recursive: true);
@@ -628,7 +629,7 @@ class _NounState extends State<Noun> {
   }
 
   Future _write(File file) async {
-    for (Name name in assignToStudent) {
+    for (NounItem name in assignToStudent) {
       //print(name.text + ' ' + name.meaning);
       await file.writeAsString(
           name.text +
@@ -670,6 +671,19 @@ class _NounState extends State<Noun> {
         });
   }
 }
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Row(
 //   children: <Widget>[

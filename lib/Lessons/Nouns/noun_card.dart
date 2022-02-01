@@ -1,15 +1,17 @@
 import 'dart:io';
 //import 'package:flutter_audio_desktop/flutter_audio_desktop.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_libwinmedia/just_audio_libwinmedia.dart';
+//import 'package:just_audio_libwinmedia/just_audio_libwinmedia.dart';
 import 'package:flutter/material.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/name_list.dart';
-import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
+//import 'package:kids_learning_tool/Lessons/Nouns/names.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:kids_learning_tool/Model/noun_list.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class NounCard extends StatefulWidget {
-  final Name name;
+  //final Name name;
+  final NounItem name;
   //final int ind;
   final AudioPlayer audioPlayer;
   NounCard(this.name, this.audioPlayer);
@@ -80,7 +82,7 @@ class _NounCardState extends State<NounCard> {
                     // Checkbox(value: value, onChanged: onChanged),
                     IconButton(
                         onPressed: () {
-                          nameList.removeItem(widget.name.text);
+                          nameList.removeItem(widget.name);
                         },
                         icon: const Icon(Icons.delete))
                   ],
