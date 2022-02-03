@@ -438,109 +438,117 @@ class _NounState extends State<Noun> {
                 buildIndicator(images),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Checkbox(
-                        value: name.isSelected,
-                        onChanged: (value) {
-                          setState(() {
-                            name.isSelected = !name.isSelected;
-                            if (name.isSelected) {
-                              assignToStudent.add(names[_index]);
-                            } else {
-                              assignToStudent.remove(names[_index]);
-                            }
-                          });
-                        }),
-                    const SizedBox(
-                        width: 300), //Spacer(), //const SizedBox(height: 20.0),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            nameList.removeItem(name);
-                          });
-                        },
-                        icon: const Icon(Icons.delete_forever_rounded)),
-                    //const SizedBox(height: 20.0),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Card(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: const <Widget>[
-                                Text(
-                                  'Noun: ',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
+            SizedBox(
+              width: 500,
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Checkbox(
+                          value: name.isSelected,
+                          onChanged: (value) {
+                            setState(() {
+                              name.isSelected = !name.isSelected;
+                              if (name.isSelected) {
+                                assignToStudent.add(names[_index]);
+                              } else {
+                                assignToStudent.remove(names[_index]);
+                              }
+                            });
+                          }),
+                      // const SizedBox(
+                      //     width: 300), //Spacer(), //const SizedBox(height: 20.0),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              nameList.removeItem(name);
+                            });
+                          },
+                          icon: const Icon(Icons.delete_forever_rounded)),
+                      //const SizedBox(height: 20.0),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Card(
+                            color: Colors.white70,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: const <Widget>[
+                                  Text(
+                                    'Noun: ',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Meaning:',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
+                                  //SizedBox(height: 10),
+                                  Text(
+                                    'Meaning:',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 20.0),
-                    Column(
-                      children: <Widget>[
-                        Card(
-                          //margin: const EdgeInsets.all(122.0),
-                          color: Colors.blue[400],
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Text(
-                                  name.text,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
+                        ],
+                      ),
+                      //const SizedBox(width: 20.0),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Card(
+                            //margin: const EdgeInsets.all(122.0),
+                            color: Colors.blue[400],
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    name.text,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  name.meaning,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
+                                  //const SizedBox(height: 10),
+                                  Text(
+                                    name.meaning,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Text('To be modified',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-              ],
+                        ],
+                      ),
+                    ],
+                  ),
+                  // const Text('To be modified',
+                  //     style:
+                  //         TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                ],
+              ),
             ),
           ],
         ),
