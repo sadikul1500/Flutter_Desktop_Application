@@ -36,7 +36,7 @@ Future<void> main() async {
       '/nounForm': (context) => NounForm(),
       '/quiz': (context) => Quiz(),
       '/matching': (context) => Matching(),
-      '/drag': (context) => MyApp(), //DragForm(),
+      '/drag': (context) => DragForm(), //MyApp(), //DragForm(),
     },
   ));
 }
