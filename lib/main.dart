@@ -10,7 +10,7 @@ import 'package:kids_learning_tool/Model/noun_list.dart';
 import 'package:kids_learning_tool/Quiz/DragDrop/audio_test.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/audioTest.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/drag.dart';
-import 'package:kids_learning_tool/Quiz/DragDrop/dragForm.dart';
+import 'package:kids_learning_tool/Quiz/DragDrop/drag_form.dart';
 //import 'package:kids_learning_tool/Quiz/Matching/preview.dart';
 //import 'package:kids_learning_tool/Quiz/Matching/question.dart';
 import 'package:kids_learning_tool/Quiz/quiz.dart';
