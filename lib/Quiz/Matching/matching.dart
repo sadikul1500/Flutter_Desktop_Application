@@ -320,10 +320,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(100, 50), elevation: 3),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           String selectedfile = _selectedFiles;
                           selectDirectory(selectedfile);
+                          await assignToStudent();
                           setState(() {
                             _selectedFiles = '';
                             //newImagePath = '';
@@ -446,5 +447,25 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       curve: Curves.fastOutSlowIn,
       duration: const Duration(seconds: 1),
     );
+  }
+
+  Future assignToStudent() async {
+    if (_selectedFiles == '') {
+      //temporary if condition
+      //alert popup
+      //_showMaterialDialog();
+    } else {
+      String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+      if (selectedDirectory == null) {
+        // User canceled the picker
+      } else {
+        selectedDirectory.replaceAll('\\', '/');
+        //print('selected directory ' + selectedDirectory);
+        File(selectedDirectory + '/Quiz/quiz.txt').createSync(recursive: true);
+        await copyImage(selectedDirectory + '/Quiz');
+        _write(File(selectedDirectory + '/Quiz/quiz.txt'));
+      }
+    }
   }
 }
