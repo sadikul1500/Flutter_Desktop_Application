@@ -1,16 +1,21 @@
-import 'dart:io';
-import 'dart:convert';
+//import 'dart:io';
 
+//import 'dart:convert';
+//to save in local storage
 class DragQuestion {
-  late List<File> files;
+  late List<String> files;
   late List<String> values;
   late List<String> valuesRight;
   //late List<String> valuesLeft;
-  late bool accepting;
+  //late bool accepting;
   late String question;
 
-  DragQuestion(this.files, this.values, this.valuesRight, this.question,
-      {this.accepting = false}) {
+  DragQuestion(
+    this.files,
+    this.values,
+    this.valuesRight,
+    this.question,
+  ) {
     //valuesLeft = newList();
   }
 
@@ -29,7 +34,7 @@ class DragQuestion {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['files'] = files;
     data['values'] = values;
     data['valuesRight'] = valuesRight;

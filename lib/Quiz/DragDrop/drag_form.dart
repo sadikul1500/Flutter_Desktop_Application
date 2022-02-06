@@ -2,6 +2,7 @@
 // ignore_for_file: use_function_type_syntax_for_parameters
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 //import 'dart:ui';
 
@@ -41,7 +42,7 @@ class DragFormState extends State<MyStatefulWidget> {
   late TextEditingController _nameController;
   late TextEditingController _valueController;
   late TextEditingController _questionController;
-  //late DragQuestion question;
+  late DragQuestion question;
   List<ItemModel> items1 = [];
   List<ItemModel> items2 = [];
   String ques =
@@ -254,15 +255,10 @@ class DragFormState extends State<MyStatefulWidget> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50), elevation: 3),
-                        onPressed: () {
-                          // if (_formKey.currentState!.validate()) {
-                          //   String selectedfile = _selectedFiles;
-                          //   selectDirectory(selectedfile);
-                          //   setState(() {
-                          //     _selectedFiles = '';
-                          //     //newImagePath = '';
-                          //   });
-                          // }
+                        onPressed: () async {
+                          //if (_formKey.currentState!.validate()) {
+                          await assignToStudent();
+                          //}
                         },
                         child: const Text(
                           'Save',
@@ -282,6 +278,50 @@ class DragFormState extends State<MyStatefulWidget> {
 //
 //
 //
+
+  Future _write(File file) async {
+    List<String> filesStr = [];
+    for (File file in files) {
+      filesStr.add(file.path.split('\\').last);
+    }
+    question =
+        DragQuestion(filesStr, values, valuesRight, _questionController.text);
+    List<DragQuestion> questions = [question];
+
+    try {
+      questions //convert list data  to json
+          .map(
+            (question) => question.toJson(),
+          )
+          .toList();
+      await file.writeAsString(json.encode(question), mode: FileMode.append);
+    } catch (e) {
+      //print(e);
+      throw Exception(e);
+    }
+  }
+
+  Future<void> copyImage(String destination) async {
+    for (File file in files) {
+      String newImagePath = destination + '/' + file.path.split('\\').last;
+      await file.copy(newImagePath);
+    }
+  }
+
+  Future assignToStudent() async {
+    String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+    if (selectedDirectory == null) {
+      // User canceled the picker
+    } else {
+      selectedDirectory.replaceAll('\\', '/');
+      //print('selected directory ' + selectedDirectory);
+      File(selectedDirectory + '/Drag/drag.json').createSync(recursive: true);
+
+      await copyImage(selectedDirectory + '/Drag');
+      await _write(File(selectedDirectory + '/Drag/drag.json'));
+    }
+  }
 
   void createQuestion() {
     //question = DragQuestion(files, values, valuesRight);
