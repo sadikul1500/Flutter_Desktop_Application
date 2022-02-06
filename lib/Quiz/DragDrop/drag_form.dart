@@ -10,7 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:kids_learning_tool/Quiz/DragDrop/drag.dart';
-import 'package:kids_learning_tool/Quiz/DragDrop/itemModel.dart';
+import 'package:kids_learning_tool/Quiz/DragDrop/item_model.dart';
 import 'package:kids_learning_tool/Quiz/DragDrop/question.dart';
 
 class DragForm extends StatelessWidget {
@@ -41,7 +41,7 @@ class DragFormState extends State<MyStatefulWidget> {
   late TextEditingController _nameController;
   late TextEditingController _valueController;
   late TextEditingController _questionController;
-  late DragQuestion question;
+  //late DragQuestion question;
   List<ItemModel> items1 = [];
   List<ItemModel> items2 = [];
   String ques =

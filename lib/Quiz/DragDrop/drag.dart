@@ -8,7 +8,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:kids_learning_tool/Quiz/DragDrop/itemModel.dart';
+import 'package:kids_learning_tool/Quiz/DragDrop/item_model.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/question.dart';
 
 class Drag extends StatefulWidget {
