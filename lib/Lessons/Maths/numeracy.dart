@@ -7,8 +7,10 @@ class Number extends StatefulWidget {
 }
 
 class _NumberState extends State<Number> {
-  int number = 10;
+  int number = 1;
   int temp = 0;
+  int maxi = 10;
+  int mini = 1;
   List<String> numbers = [
     'One',
     'Two',
@@ -37,13 +39,6 @@ class _NumberState extends State<Number> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Icon(
-            //   number % 2 == 0
-            //       ? FontAwesomeIcons.seedling
-            //       : FontAwesomeIcons.solidLemon,
-            //   color: Colors.green,
-            //   size: 50,
-            // ),
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               for (int i = 0; i < (number / 3).ceil(); i++)
                 Row(
@@ -96,10 +91,10 @@ class _NumberState extends State<Number> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
+                temp = 0;
                 setState(() {
-                  //temp = 0;
-                  if (number > 1) {
-                    temp = 0;
+                  temp = 0;
+                  if (number > mini) {
                     number -= 1;
                   }
                 });
@@ -111,13 +106,14 @@ class _NumberState extends State<Number> {
               style: ElevatedButton.styleFrom(
                 alignment: Alignment.center,
                 minimumSize: const Size(100, 42),
+                primary: number == mini ? Colors.blue[100] : Colors.blue[600],
               ),
             ),
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (number < 10) {
-                    temp = 0;
+                  temp = 0;
+                  if (number < maxi) {
                     number += 1;
                   }
                 });
@@ -129,6 +125,7 @@ class _NumberState extends State<Number> {
               style: ElevatedButton.styleFrom(
                 alignment: Alignment.center,
                 minimumSize: const Size(100, 42),
+                primary: number == maxi ? Colors.blue[100] : Colors.blue[600],
               ),
             ),
           ],
