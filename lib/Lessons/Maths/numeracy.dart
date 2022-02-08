@@ -8,6 +8,7 @@ class Number extends StatefulWidget {
 
 class _NumberState extends State<Number> {
   int number = 10;
+  int temp = 0;
   List<String> numbers = [
     'One',
     'Two',
@@ -31,77 +32,137 @@ class _NumberState extends State<Number> {
                 text: 'Number',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
           ]))),
-      body: Column(
+      body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <
+          Widget>[
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
+          children: [
+            // Icon(
+            //   number % 2 == 0
+            //       ? FontAwesomeIcons.seedling
+            //       : FontAwesomeIcons.solidLemon,
+            //   color: Colors.green,
+            //   size: 50,
+            // ),
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              for (int i = 0; i < (number / 3).ceil(); i++)
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [..._getIcons()]),
+            ]),
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Icon(
-                //   number % 2 == 0
-                //       ? FontAwesomeIcons.seedling
-                //       : FontAwesomeIcons.solidLemon,
-                //   color: Colors.green,
-                //   size: 50,
-                // ),
-                ..._getIcons(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text.rich(
-                        TextSpan(children: [
-                          TextSpan(
-                              text: '$number',
-                              style: TextStyle(
-                                fontSize: 200,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.blue[700],
-                              ))
-                        ]),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text.rich(
+                    TextSpan(children: [
+                      TextSpan(
+                          text: '$number',
+                          style: TextStyle(
+                            fontSize: 200,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.blue[700],
+                          ))
+                    ]),
+                  ),
+                ),
+                Card(
+                  //margin: const EdgeInsets.all(122.0),
+                  color: Colors.blue[700],
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 10.0),
+                    child: Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                            text: numbers[number - 1],
+                            style: const TextStyle(
+                              fontSize: 50,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ))
+                      ]),
                     ),
-                    Card(
-                      //margin: const EdgeInsets.all(122.0),
-                      color: Colors.blue[700],
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 10.0),
-                        child: Text.rich(
-                          TextSpan(children: [
-                            TextSpan(
-                                text: numbers[number - 1],
-                                style: const TextStyle(
-                                  fontSize: 50,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ))
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
-            )
-          ]),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  //temp = 0;
+                  if (number > 1) {
+                    temp = 0;
+                    number -= 1;
+                  }
+                });
+              },
+              child: const Icon(
+                Icons.navigate_before,
+                size: 40,
+              ),
+              style: ElevatedButton.styleFrom(
+                alignment: Alignment.center,
+                minimumSize: const Size(100, 42),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  if (number < 10) {
+                    temp = 0;
+                    number += 1;
+                  }
+                });
+              },
+              child: const Icon(
+                Icons.navigate_next,
+                size: 40,
+              ),
+              style: ElevatedButton.styleFrom(
+                alignment: Alignment.center,
+                minimumSize: const Size(100, 42),
+              ),
+            ),
+          ],
+        )
+      ]),
     );
   }
 
   List<Widget> _getIcons() {
     List<Widget> friendsTextFields = [];
-    for (int i = 0; i < 8; i++) {
+    int x = 0;
+    if (temp + 3 <= number) {
+      x = 3;
+      temp += 3;
+      //print(temp);
+    } else {
+      x = number - temp;
+      temp += x;
+      //print(temp);
+    }
+    for (int i = 0; i < x; i++) {
       friendsTextFields.add(Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Icon(
-          number % 2 == 0
-              ? FontAwesomeIcons.seedling
-              : FontAwesomeIcons.solidLemon,
-          color: Colors.green,
-          size: 50,
+        child: Row(
+          children: [
+            Icon(
+              number % 2 == 0
+                  ? FontAwesomeIcons.seedling
+                  : FontAwesomeIcons.solidLemon,
+              color: Colors.green,
+              size: 50,
+            ),
+            const SizedBox(width: 20),
+          ],
         ),
       ));
     }
