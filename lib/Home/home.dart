@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+//import 'package:kids_learning_tool/Lessons/Maths/numeracy.dart';
 //import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
@@ -48,7 +49,13 @@ class _HomeState extends State<Home> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(300, 60), elevation: 3),
-                    onPressed: () {},
+                    onPressed: () {
+                      // With MaterialPageRoute, you can pass data between pages,
+                      // but if you have a more complex app, you will quickly get lost.
+                      Navigator.of(context)
+                          .pushNamed('/numeracy')
+                          .then((value) => setState(() {}));
+                    },
                     child: const Text(
                       'Verb',
                       style: TextStyle(
