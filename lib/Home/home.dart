@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                       // With MaterialPageRoute, you can pass data between pages,
                       // but if you have a more complex app, you will quickly get lost.
                       Navigator.of(context)
-                          .pushNamed('/numeracy')
+                          .pushNamed('/addition')
                           .then((value) => setState(() {}));
                     },
                     child: const Text(

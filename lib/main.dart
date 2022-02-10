@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 //import 'package:just_audio/just_audio.dart';
 import 'package:kids_learning_tool/Home/home.dart';
+import 'package:kids_learning_tool/Lessons/Maths/addition.dart';
 import 'package:kids_learning_tool/Lessons/Maths/numeracy.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun_form.dart';
@@ -39,6 +40,7 @@ Future<void> main() async {
       '/matching': (context) => Matching(),
       '/drag': (context) => DragForm(), //MyApp(), //DragForm(),
       '/numeracy': (context) => Number(),
+      '/addition': (context) => Addition(),
     },
   ));
 }
