@@ -1,8 +1,10 @@
 //bounces on tap only
 import 'package:flutter/material.dart';
+import 'package:kids_learning_tool/Lessons/Maths/addition.dart';
 
 class BouncingButton extends StatefulWidget {
   final String text;
+  Addition addition_answer = Addition();
   BouncingButton(this.text);
   @override
   _BouncingButtonState createState() => _BouncingButtonState();
@@ -38,29 +40,32 @@ class _BouncingButtonState extends State<BouncingButton>
     return GestureDetector(
       onTapDown: _tapDown,
       onTapUp: _tapUp,
-      child: AnimatedButton(_controller, widget.text),
+      child: AnimatedButton(
+          _controller, widget.text, widget.addition_answer), //, widget.ans
     );
   }
 
   void _tapDown(TapDownDetails details) {
     _controller.forward();
-    print(100);
+    //print(100);
   }
 
   void _tapUp(TapUpDetails details) {
     _controller.reverse();
-    print(200);
+    //print(200);
   }
 }
 
 class AnimatedButton extends AnimatedWidget {
   final AnimationController _controller;
   final String text;
+  Addition answer = Addition();
   // const AnimatedButton({
   //   required AnimationController controller,
   // })  : _controller = controller,
   //       super(listenable: controller);
-  AnimatedButton(this._controller, this.text) : super(listenable: _controller);
+  AnimatedButton(this._controller, this.text,this.answer)
+      : super(listenable: _controller); //, this.ans
 
   @override
   Widget build(BuildContext context) {
