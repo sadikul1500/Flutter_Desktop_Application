@@ -23,7 +23,7 @@ class _QuizState extends State<Quiz> {
       body: Center(
         child: SizedBox(
           width: 400,
-          height: 220,
+          height: 250,
           //color: Colors.grey[700],
           child: Card(
             color: Colors.grey[500],
@@ -68,12 +68,12 @@ class _QuizState extends State<Quiz> {
                         minimumSize: const Size(300, 60), elevation: 3),
                     onPressed: () {
                       Navigator.of(context).push(
-                            // With MaterialPageRoute, you can pass data between pages,
-                            // but if you have a more complex app, you will quickly get lost.
-                            MaterialPageRoute(
-                              builder: (context) => const PuzzleQuestion(),
-                            ),
-                          );
+                        // With MaterialPageRoute, you can pass data between pages,
+                        // but if you have a more complex app, you will quickly get lost.
+                        MaterialPageRoute(
+                          builder: (context) => Jigsaw(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Jigsaw Puzzle',

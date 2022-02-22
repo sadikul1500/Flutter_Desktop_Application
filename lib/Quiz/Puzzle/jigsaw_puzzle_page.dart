@@ -4,10 +4,28 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_pick_area.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_preview.dart';
-//import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_pick_area.dart';
-//import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_preview.dart';
+import 'package:kids_learning_tool/Quiz/Puzzle/utils.dart';
 
-//import '../utils.dart';
+class PuzzlePage extends StatefulWidget {
+  final File file;
+  const PuzzlePage({Key? key, required this.file}) : super(key: key);
+
+  @override
+  _PuzzlePageState createState() => _PuzzlePageState();
+}
+
+class _PuzzlePageState extends State<PuzzlePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Solve the puzzle'),
+        centerTitle: true,
+      ),
+      body: JigsawPuzzlePage(widget.file),
+    );
+  }
+}
 
 class JigsawPuzzlePage extends StatefulWidget {
   //final ui.Image _srcImage;
@@ -20,7 +38,7 @@ class JigsawPuzzlePage extends StatefulWidget {
 class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
   ui.Image? _srcImage;
 
-  List<int> _correctIdList = [];
+  final List<int> _correctIdList = [];
 
   @override
   void initState() {
@@ -29,7 +47,7 @@ class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
   }
 
   void _loadImage() async {
-    _srcImage = Image.file(widget.file) as ui.Image?; //await ImageUtils.loadAssetImage('images/test_img.png');
+    _srcImage = await ImageUtils.loadImage(widget.file);
     setState(() {});
   }
 
@@ -42,25 +60,33 @@ class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
   }
 
   Widget _buildPageContentWidget() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.blueGrey,
-      child: Row(
-        children: [
-          JigsawPuzzlePreviewWidget(
-            srcImage: _srcImage!,
-            correctCallback: (id) {
-              setState(() {
-                _correctIdList.add(id);
-              });
-            },
-          ),
-          JigsawPuzzlePickAreaWidget(
-            srcImage: _srcImage!,
-            correctIdList: _correctIdList,
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () {
+        //trigger leaving and use own data
+        Navigator.pop(context);
+        //we need to return a future
+        return Future.value(false);
+      },
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.blueGrey,
+        child: Row(
+          children: [
+            JigsawPuzzlePreviewWidget(
+              srcImage: _srcImage!,
+              correctCallback: (id) {
+                setState(() {
+                  _correctIdList.add(id);
+                });
+              },
+            ),
+            JigsawPuzzlePickAreaWidget(
+              srcImage: _srcImage!,
+              correctIdList: _correctIdList,
+            ),
+          ],
+        ),
       ),
     );
   }
