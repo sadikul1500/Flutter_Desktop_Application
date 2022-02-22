@@ -76,6 +76,8 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   build_runner: ^2.1.7
   hive_generator: ^1.1.2
+  svg_path_parser: ^1.1.1
+  animated_widgets: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
