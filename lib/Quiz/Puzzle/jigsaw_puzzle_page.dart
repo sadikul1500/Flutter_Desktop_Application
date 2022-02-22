@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -9,9 +10,9 @@ import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_preview.dart';
 //import '../utils.dart';
 
 class JigsawPuzzlePage extends StatefulWidget {
-  final ui.Image _srcImage;
-
-  JigsawPuzzlePage(this._srcImage);
+  //final ui.Image _srcImage;
+  final File file;
+  JigsawPuzzlePage(this.file);
   @override
   _JigsawPuzzlePageState createState() => _JigsawPuzzlePageState();
 }
@@ -28,8 +29,7 @@ class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
   }
 
   void _loadImage() async {
-    _srcImage = widget
-        ._srcImage; //await ImageUtils.loadAssetImage('images/test_img.png');
+    _srcImage = Image.file(widget.file) as ui.Image?; //await ImageUtils.loadAssetImage('images/test_img.png');
     setState(() {});
   }
 

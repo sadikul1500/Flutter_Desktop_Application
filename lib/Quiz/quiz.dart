@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:kids_learning_tool/Quiz/Puzzle/puzzle_question.dart';
 //import 'package:flutter/services.dart';
 
 class Quiz extends StatefulWidget {
@@ -56,6 +57,26 @@ class _QuizState extends State<Quiz> {
                     },
                     child: const Text(
                       'Drag & Drop',
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 60), elevation: 3),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                            // With MaterialPageRoute, you can pass data between pages,
+                            // but if you have a more complex app, you will quickly get lost.
+                            MaterialPageRoute(
+                              builder: (context) => const PuzzleQuestion(),
+                            ),
+                          );
+                    },
+                    child: const Text(
+                      'Jigsaw Puzzle',
                       style: TextStyle(
                         fontSize: 24,
                       ),
