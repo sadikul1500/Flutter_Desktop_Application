@@ -3,18 +3,13 @@ import 'dart:ui' as ui;
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:jigsaw_puzzle/jigsaw_puzzle/jigsaw_puzzle.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_card_border_light.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle.dart';
-//import 'package:jigsaw_puzzle/jigsaw_puzzle/jigsaw_puzzle_data.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_data.dart';
-// import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle.dart';
-// import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_card_border_light.dart';
-// import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_data.dart';
 
 class JigsawPuzzlePreviewWidget extends StatefulWidget {
-  final ui.Image srcImage;
-  final Function(int) correctCallback;
+  ui.Image srcImage;
+  Function(int) correctCallback;
 
   JigsawPuzzlePreviewWidget({
     required this.srcImage,
@@ -27,8 +22,8 @@ class JigsawPuzzlePreviewWidget extends StatefulWidget {
 }
 
 class _JigsawPuzzlePreviewWidgetState extends State<JigsawPuzzlePreviewWidget> {
-  final Map<int, Widget> _previewImageCardMap = {};
-  final List<Widget> _jigsawPuzzleCardLightBorderList = [];
+  Map<int, Widget> _previewImageCardMap = {};
+  List<Widget> _jigsawPuzzleCardLightBorderList = [];
 
   @override
   void initState() {
@@ -90,7 +85,7 @@ class _JigsawPuzzlePreviewWidgetState extends State<JigsawPuzzlePreviewWidget> {
     );
   }
 
-  /// 正确发光动画 correct matching
+  // correct matching
   Widget _buildCorrectBorderLightWidget(JigsawPuzzleData data) {
     return Positioned(
       left: data.left,
@@ -112,7 +107,7 @@ class _JigsawPuzzlePreviewWidgetState extends State<JigsawPuzzlePreviewWidget> {
     );
   }
 
-  /// 错误发光动画 Mis match
+  // Mis match
   Widget _buildErrorBorderLightWidget(JigsawPuzzleData data) {
     return Positioned(
       left: data.left,

@@ -5,8 +5,8 @@ import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_data.dart';
 //import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_data.dart';
 
 class JigsawPuzzlePickAreaWidget extends StatelessWidget {
-  final ui.Image srcImage;
-  final List<int> correctIdList;
+  ui.Image srcImage;
+  List<int> correctIdList;
 
   JigsawPuzzlePickAreaWidget({
     required this.srcImage,

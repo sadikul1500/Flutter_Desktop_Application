@@ -15,6 +15,38 @@ class PuzzlePage extends StatefulWidget {
 }
 
 class _PuzzlePageState extends State<PuzzlePage> {
+  ui.Image? _srcImage;
+
+  List<int> _correctIdList = [];
+  late JigsawPuzzlePreviewWidget preview;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImage();
+    // preview = JigsawPuzzlePreviewWidget(
+    //   srcImage: _srcImage!,
+    //   correctCallback: (id) {
+    //     setState(() {
+    //       _correctIdList.add(id);
+    //     });
+    //   },
+    // );
+  }
+
+  Future<void> _loadImage() async {
+    _srcImage = await ImageUtils.loadImage(widget.file);
+    preview = JigsawPuzzlePreviewWidget(
+      srcImage: _srcImage!,
+      correctCallback: (id) {
+        setState(() {
+          _correctIdList.add(id);
+        });
+      },
+    );
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,72 +54,113 @@ class _PuzzlePageState extends State<PuzzlePage> {
         title: const Text('Solve the puzzle'),
         centerTitle: true,
       ),
-      body: JigsawPuzzlePage(widget.file),
-    );
-  }
-}
+      body: _srcImage == null
+          ? const Text('No image found')
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.blueGrey,
+              child: Row(
+                children: [
+                  preview,
+                  JigsawPuzzlePickAreaWidget(
+                    srcImage: _srcImage!,
+                    correctIdList: _correctIdList,
+                  ),
+                ],
+              ),
+            ), //JigsawPuzzlePage(widget.file),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          //_corre
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => PuzzlePage(file: widget.file),
+          //   ),
+          // );
+          setState(() {
+            _correctIdList.clear();
 
-class JigsawPuzzlePage extends StatefulWidget {
-  //final ui.Image _srcImage;
-  final File file;
-  JigsawPuzzlePage(this.file);
-  @override
-  _JigsawPuzzlePageState createState() => _JigsawPuzzlePageState();
-}
-
-class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
-  ui.Image? _srcImage;
-
-  final List<int> _correctIdList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadImage();
-  }
-
-  void _loadImage() async {
-    _srcImage = await ImageUtils.loadImage(widget.file);
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_srcImage == null) {
-      return Container();
-    }
-    return _buildPageContentWidget();
-  }
-
-  Widget _buildPageContentWidget() {
-    return WillPopScope(
-      onWillPop: () {
-        //trigger leaving and use own data
-        Navigator.pop(context);
-        //we need to return a future
-        return Future.value(false);
-      },
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.blueGrey,
-        child: Row(
-          children: [
-            JigsawPuzzlePreviewWidget(
+            preview = JigsawPuzzlePreviewWidget(
               srcImage: _srcImage!,
               correctCallback: (id) {
                 setState(() {
                   _correctIdList.add(id);
                 });
               },
-            ),
-            JigsawPuzzlePickAreaWidget(
-              srcImage: _srcImage!,
-              correctIdList: _correctIdList,
-            ),
-          ],
-        ),
+            );
+
+            //JigsawPuzzlePreviewWidpget.
+          });
+        },
+        icon: const Icon(Icons.refresh_rounded),
+        label: const Text(''),
       ),
     );
   }
 }
+
+// class JigsawPuzzlePage extends StatefulWidget {
+//   //final ui.Image _srcImage;
+//   final File file;
+//   JigsawPuzzlePage(this.file);
+//   @override
+//   _JigsawPuzzlePageState createState() => _JigsawPuzzlePageState();
+// }
+
+// class _JigsawPuzzlePageState extends State<JigsawPuzzlePage> {
+//   ui.Image? _srcImage;
+
+//   List<int> _correctIdList = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadImage();
+//   }
+
+//   void _loadImage() async {
+//     _srcImage = await ImageUtils.loadImage(widget.file);
+//     setState(() {});
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (_srcImage == null) {
+//       return Container();
+//     }
+//     return _buildPageContentWidget();
+//   }
+
+//   Widget _buildPageContentWidget() {
+//     return WillPopScope(
+//       onWillPop: () {
+//         //trigger leaving and use own data
+//         Navigator.pop(context);
+//         //we need to return a future
+//         return Future.value(false);
+//       },
+//       child: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         color: Colors.blueGrey,
+//         child: Row(
+//           children: [
+//             JigsawPuzzlePreviewWidget(
+//               srcImage: _srcImage!,
+//               correctCallback: (id) {
+//                 setState(() {
+//                   _correctIdList.add(id);
+//                 });
+//               },
+//             ),
+//             JigsawPuzzlePickAreaWidget(
+//               srcImage: _srcImage!,
+//               correctIdList: _correctIdList,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
