@@ -11,10 +11,10 @@ class JigsawPuzzlePreviewWidget extends StatefulWidget {
   ui.Image srcImage;
   Function(int) correctCallback;
 
-  JigsawPuzzlePreviewWidget({
-    required this.srcImage,
-    required this.correctCallback,
-  });
+  JigsawPuzzlePreviewWidget(
+    this.srcImage,
+    this.correctCallback,
+  );
 
   @override
   _JigsawPuzzlePreviewWidgetState createState() =>
@@ -37,6 +37,7 @@ class _JigsawPuzzlePreviewWidgetState extends State<JigsawPuzzlePreviewWidget> {
   }
 
   void _generateJigsawPuzzleCardWidgetList() {
+    print('called');
     _previewImageCardMap.clear();
     _previewImageCardMap.addAll(
         JigsawPuzzleDataGenerator.generatePreviewImageJigsawPuzzleCardWidgetMap(

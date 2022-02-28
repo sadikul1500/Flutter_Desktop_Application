@@ -24,21 +24,13 @@ class _PuzzlePageState extends State<PuzzlePage> {
   void initState() {
     super.initState();
     _loadImage();
-    // preview = JigsawPuzzlePreviewWidget(
-    //   srcImage: _srcImage!,
-    //   correctCallback: (id) {
-    //     setState(() {
-    //       _correctIdList.add(id);
-    //     });
-    //   },
-    // );
   }
 
   Future<void> _loadImage() async {
     _srcImage = await ImageUtils.loadImage(widget.file);
     preview = JigsawPuzzlePreviewWidget(
-      srcImage: _srcImage!,
-      correctCallback: (id) {
+      _srcImage!,
+      (id) {
         setState(() {
           _correctIdList.add(id);
         });
@@ -82,15 +74,13 @@ class _PuzzlePageState extends State<PuzzlePage> {
             _correctIdList.clear();
 
             preview = JigsawPuzzlePreviewWidget(
-              srcImage: _srcImage!,
-              correctCallback: (id) {
+              _srcImage!,
+              (id) {
                 setState(() {
                   _correctIdList.add(id);
                 });
               },
             );
-
-            //JigsawPuzzlePreviewWidpget.
           });
         },
         icon: const Icon(Icons.refresh_rounded),
