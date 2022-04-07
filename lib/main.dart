@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 //import 'package:just_audio/just_audio.dart';
 import 'package:kids_learning_tool/Home/home.dart';
+import 'package:kids_learning_tool/Lessons/Color/color.dart';
 import 'package:kids_learning_tool/Lessons/Maths/addition.dart';
 import 'package:kids_learning_tool/Lessons/Maths/numeracy.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun.dart';
 import 'package:kids_learning_tool/Lessons/Nouns/noun_form.dart';
+import 'package:kids_learning_tool/Model/color_list.dart';
 import 'package:kids_learning_tool/Model/noun_list.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/audio_test.dart';
 //import 'package:kids_learning_tool/Quiz/DragDrop/audioTest.dart';
@@ -27,7 +29,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(NounItemAdapter());
+  Hive.registerAdapter(ColorItemAdapter());
   await Hive.openBox<NounItem>('nouns');
+  await Hive.openBox<ColorItem>('colors');
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -35,12 +39,13 @@ Future<void> main() async {
     routes: {
       '/home': (context) => Home(),
       '/noun': (context) => Noun(),
-      '/nounForm': (context) => NounForm(),
+      '/nounForm': (context) => NounForm(), //NounForm(),
       '/quiz': (context) => Quiz(),
       '/matching': (context) => Matching(),
       '/drag': (context) => DragForm(), //MyApp(), //DragForm(),
       '/numeracy': (context) => Number(),
       '/addition': (context) => Addition(),
+      '/color': (context) => BasicColor(),
     },
   ));
 }
