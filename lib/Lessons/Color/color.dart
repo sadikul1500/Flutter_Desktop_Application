@@ -27,6 +27,18 @@ class _BasicColorState extends State<BasicColor> {
   PlayerState? _state;
   final CarouselController _controller = CarouselController();
   int activateIndex = 0;
+  var theme = {
+    'Black': Colors.black87,
+    'Blue': Colors.blue,
+    'Brown': Colors.brown,
+    'Green': Colors.green,
+    'Orange': Colors.orange,
+    'Pink': Colors.pink,
+    'Purple': Colors.purple,
+    'Red': Colors.red,
+    'White': Colors.white,
+    'Yellow': Colors.yellow
+  };
 
   bool _isPlaying = false;
   bool carouselAutoPlay = false;
@@ -102,9 +114,10 @@ class _BasicColorState extends State<BasicColor> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: theme[colors[_index].text],
           title: const Text(
             'Colour',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ),
           centerTitle: true,
           actions: [
@@ -138,14 +151,9 @@ class _BasicColorState extends State<BasicColor> {
                 children: <Widget>[
                   ElevatedButton.icon(
                     onPressed: () {
-                      //print('prev');
-                      //print(_state?.processingState);
-                      //_audioPlayer.stop();
                       stop();
 
                       setState(() {
-                        //loading();
-
                         _isPlaying = false;
 
                         try {
@@ -153,7 +161,6 @@ class _BasicColorState extends State<BasicColor> {
                         } catch (e) {
                           //print(e);
                         }
-                        //print(_state?.processingState);
                       });
                     },
                     label: const Text(
@@ -169,6 +176,7 @@ class _BasicColorState extends State<BasicColor> {
                     style: ElevatedButton.styleFrom(
                       alignment: Alignment.center,
                       minimumSize: const Size(100, 42),
+                      primary: theme[colors[_index].text],
                     ),
                   ),
                   const SizedBox(width: 30),
@@ -189,9 +197,6 @@ class _BasicColorState extends State<BasicColor> {
                   const SizedBox(width: 30),
                   ElevatedButton(
                     onPressed: () {
-                      //print('next');
-                      //print(_state);
-                      //_audioPlayer.stop();
                       stop();
                       setState(() {
                         //loading();
@@ -220,6 +225,7 @@ class _BasicColorState extends State<BasicColor> {
                     style: ElevatedButton.styleFrom(
                       alignment: Alignment.center,
                       minimumSize: const Size(100, 42),
+                      primary: theme[colors[_index].text],
                     ),
                   ),
                 ],
@@ -232,6 +238,7 @@ class _BasicColorState extends State<BasicColor> {
           children: [
             const SizedBox(width: 25.0),
             FloatingActionButton.extended(
+              backgroundColor: theme[colors[_index].text],
               heroTag: 'btn1',
               onPressed: () {
                 stop();
@@ -248,15 +255,11 @@ class _BasicColorState extends State<BasicColor> {
             // ),
             const Spacer(),
             FloatingActionButton.extended(
+              backgroundColor: theme[colors[_index].text],
               heroTag: 'btn2',
               onPressed: () {
-                // setState(() {
                 stop();
-                // });
-                // Navigator.pushNamed(
-                //     context, '/nounForm').then((value) { setState(() {}); //.then((_) => setState(() {
-                //       Noun();
-                //     }));
+
                 Navigator.of(context)
                     .pushNamed('/nounForm')
                     .then((value) => setState(() {}));
@@ -292,8 +295,6 @@ class _BasicColorState extends State<BasicColor> {
   }
 
   Future play() async {
-    //print('play called and ............................');
-    //print(_state?.processingState);
     _audioPlayer.play();
     // if (result == 1) {
     setState(() {
@@ -307,15 +308,6 @@ class _BasicColorState extends State<BasicColor> {
   Widget colorCardWidget() {
     ColorItem color = colors.elementAt(_index);
     List<String> images = color.getImgList();
-    //print('noun card widget');
-    //print(_index);
-    //print(name.text);
-
-    // setState(() {
-    //   _audioPlayer.play();
-    // });
-    //
-    //_audioPlayer.play();
 
     return Card(
       child: Padding(
@@ -392,8 +384,7 @@ class _BasicColorState extends State<BasicColor> {
                               }
                             });
                           }),
-                      // const SizedBox(
-                      //     width: 300), //Spacer(), //const SizedBox(height: 20.0),
+
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -407,69 +398,73 @@ class _BasicColorState extends State<BasicColor> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Card(
-                            color: Colors.white70,
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: const <Widget>[
-                                  Text(
-                                    'Noun: ',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  //SizedBox(height: 10),
-                                  Text(
-                                    'Meaning:',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: <Widget>[
+                      //     Card(
+                      //       color: Colors.white70,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(20.0),
+                      //         child: Column(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceEvenly,
+                      //           children: const <Widget>[
+                      //             Text(
+                      //               'Noun: ',
+                      //               style: TextStyle(
+                      //                 fontSize: 24,
+                      //                 fontWeight: FontWeight.w600,
+                      //               ),
+                      //             ),
+                      //             //SizedBox(height: 10),
+                      //             Text(
+                      //               'Meaning:',
+                      //               style: TextStyle(
+                      //                 fontSize: 24,
+                      //                 fontWeight: FontWeight.w600,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       //const SizedBox(width: 20.0),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Card(
-                            //margin: const EdgeInsets.all(122.0),
-                            color: Colors.blue[400],
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text(
-                                    color.text,
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                          SizedBox(
+                            width: 222,
+                            height: 150,
+                            child: Card(
+                              //margin: const EdgeInsets.all(122.0),
+                              color: theme[colors[_index].text],
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Text(
+                                      color.text,
+                                      style: const TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  //const SizedBox(height: 10),
-                                  Text(
-                                    color.meaning,
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                    //const SizedBox(height: 10),
+                                    Text(
+                                      color.meaning,
+                                      style: const TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -504,9 +499,9 @@ class _BasicColorState extends State<BasicColor> {
   Widget buildIndicator(List<String> images) => AnimatedSmoothIndicator(
         activeIndex: activateIndex % images.length,
         count: images.length,
-        effect: const JumpingDotEffect(
+        effect: JumpingDotEffect(
           //SwapEffect
-          activeDotColor: Colors.blue,
+          activeDotColor: theme[colors[_index].text]!,
           dotColor: Colors.black12,
           dotHeight: 10,
           dotWidth: 10,
@@ -571,7 +566,6 @@ class _BasicColorState extends State<BasicColor> {
 
   Future _write(File file) async {
     for (ColorItem color in assignToStudent) {
-      //print(name.text + ' ' + name.meaning);
       await file.writeAsString(
           color.text +
               '; ' +
@@ -583,10 +577,6 @@ class _BasicColorState extends State<BasicColor> {
               '\n',
           mode: FileMode.append);
     }
-
-    // String line = text + '; ' + meaning + '; ' + dir + '; ' + audio;
-    // //addNoun(text, meaning, dir);
-    // return file.writeAsString('\n$line', mode: FileMode.append);
   }
 
   _dismissDialog() {
