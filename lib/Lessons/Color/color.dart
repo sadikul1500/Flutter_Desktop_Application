@@ -27,17 +27,18 @@ class _BasicColorState extends State<BasicColor> {
   PlayerState? _state;
   final CarouselController _controller = CarouselController();
   int activateIndex = 0;
+  List<File> files = [];
   var theme = {
-    'Black': Colors.black87,
+    'Black': Colors.black38,
     'Blue': Colors.blue,
     'Brown': Colors.brown,
     'Green': Colors.green,
     'Orange': Colors.orange,
     'Pink': Colors.pink,
     'Purple': Colors.purple,
-    'Red': Colors.red,
-    'White': Colors.white,
-    'Yellow': Colors.yellow
+    'Red': const Color.fromARGB(255, 202, 29, 17),
+    'White': Colors.grey,
+    'Yellow': const Color.fromARGB(255, 182, 167, 30)
   };
 
   bool _isPlaying = false;
@@ -132,7 +133,6 @@ class _BasicColorState extends State<BasicColor> {
                   setState(() {
                     _index = max(0,
                         colors.indexWhere((element) => element.text == result));
-                    //_audioPlayer.play();
                   });
                 },
                 icon: const SafeArea(child: Icon(Icons.search_sharp)))
@@ -187,10 +187,8 @@ class _BasicColorState extends State<BasicColor> {
                       iconSize: 40,
                       onPressed: () {
                         if (!_isPaused) {
-                          //print('---------is playing true-------');
                           pause(); //stop()
                         } else {
-                          //print('-------is playing false-------');
                           play();
                         }
                       }),
@@ -296,13 +294,12 @@ class _BasicColorState extends State<BasicColor> {
 
   Future play() async {
     _audioPlayer.play();
-    // if (result == 1) {
+
     setState(() {
       _isPlaying = true;
       _isPaused = false;
       carouselAutoPlay = true;
     });
-    //}
   }
 
   Widget colorCardWidget() {
@@ -317,6 +314,33 @@ class _BasicColorState extends State<BasicColor> {
           children: <Widget>[
             Column(
               children: <Widget>[
+                SizedBox(
+                  width: 600,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                          color: theme[colors[_index].text],
+                          onPressed: () {
+                            setState(() {
+                              _openFileExplorer();
+                              saveImage();
+                            });
+                          },
+                          icon: const Icon(Icons.add_a_photo)),
+                      IconButton(
+                          color: theme[colors[_index].text],
+                          //hoverColor: Colors.red[200],
+                          onPressed: () {
+                            setState(() {
+                              deleteImage(
+                                  activateIndex); //primary testing done. passed
+                            });
+                          },
+                          icon: const Icon(Icons.delete_outline)),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 420,
                   width: 600,
@@ -384,7 +408,6 @@ class _BasicColorState extends State<BasicColor> {
                               }
                             });
                           }),
-
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -392,45 +415,11 @@ class _BasicColorState extends State<BasicColor> {
                             });
                           },
                           icon: const Icon(Icons.delete_forever_rounded)),
-                      //const SizedBox(height: 20.0),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      // Column(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: <Widget>[
-                      //     Card(
-                      //       color: Colors.white70,
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.all(20.0),
-                      //         child: Column(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceEvenly,
-                      //           children: const <Widget>[
-                      //             Text(
-                      //               'Noun: ',
-                      //               style: TextStyle(
-                      //                 fontSize: 24,
-                      //                 fontWeight: FontWeight.w600,
-                      //               ),
-                      //             ),
-                      //             //SizedBox(height: 10),
-                      //             Text(
-                      //               'Meaning:',
-                      //               style: TextStyle(
-                      //                 fontSize: 24,
-                      //                 fontWeight: FontWeight.w600,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      //const SizedBox(width: 20.0),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -482,6 +471,57 @@ class _BasicColorState extends State<BasicColor> {
         ),
       ),
     );
+  }
+
+  void _openFileExplorer() async {
+    files.clear();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
+    );
+
+    if (result != null) {
+      files = result.paths.map((path) => File(path!)).toList();
+      //PlatformFile file = result.files.first;
+
+      // setState(() {
+      //   for (File file in files) {
+      //     _selectedFiles += file.path.split('\\').last + ', ';
+      //   }
+      // });
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  Future saveImage() async {
+    // path =
+    //     'D:/Sadi/FlutterProjects/Flutter_Desktop_Application-main/assets/Colors/${color.text}';
+    if (files.isEmpty) return;
+    String path = colors[_index].dir;
+
+    final newDir = await Directory(path).create(recursive: true);
+
+    for (File file in files) {
+      await file.copy('${newDir.path}/${file.path.split('\\').last}');
+    }
+    // await audio.copy('$audioPath/${audio.path.split('\\').last}');
+    //audio = File(audioPath + '/' + audio.path.split('\\').last);
+
+    //createNoun(imagePath);
+  }
+
+  Future<void> deleteImage(int ind) async {
+    File file = File(colors[_index].imgList[ind]);
+    try {
+      if (await file.exists()) {
+        await file.delete();
+        colors[_index].imgList.removeAt(ind);
+      }
+    } catch (e) {
+      //
+    }
   }
 
   Widget buildImage(String img, int index) {
