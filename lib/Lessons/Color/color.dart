@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:kids_learning_tool/Lessons/Color/addToDb.dart';
 import 'package:kids_learning_tool/Model/color_list.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 //import 'package:kplayer/kplayer.dart';
 
@@ -38,7 +39,7 @@ class _BasicColorState extends State<BasicColor> {
     'Purple': Colors.purple,
     'Red': const Color.fromARGB(255, 202, 29, 17),
     'White': Colors.grey,
-    'Yellow': const Color.fromARGB(255, 182, 167, 30)
+    'Yellow': const Color.fromARGB(255, 234, 212, 19)
   };
 
   bool _isPlaying = false;
@@ -76,7 +77,13 @@ class _BasicColorState extends State<BasicColor> {
         _state = state;
       });
     });
+    printDirectoryPath();
     super.initState();
+  }
+
+  printDirectoryPath() async {
+    final directory = await getApplicationDocumentsDirectory();
+    print(directory.path);
   }
 
   Future<List<String>> loadData() async {
@@ -323,8 +330,17 @@ class _BasicColorState extends State<BasicColor> {
                           color: theme[colors[_index].text],
                           onPressed: () {
                             setState(() {
-                              _openFileExplorer();
-                              saveImage();
+                              _openFileExplorer().then((data) {
+                                if (data.isNotEmpty) {
+                                  saveImage().then((value) {
+                                    if (value == 1) {
+                                      //color.updateImgList();
+                                      //images.clear();
+                                    }
+                                  });
+                                }
+                              });
+                              //images = color.getImgList();
                             });
                           },
                           icon: const Icon(Icons.add_a_photo)),
@@ -364,12 +380,7 @@ class _BasicColorState extends State<BasicColor> {
                         pauseAutoPlayOnManualNavigate: true,
                         onPageChanged: (index, reason) {
                           setState(() {
-                            //images = widget.name.getImgList();
-                            // if (index >= images.length)
-                            //   activateIndex = 0;
-                            // else
                             activateIndex = index;
-                            //print(activateIndex);
                           });
                         }),
                     itemBuilder: (context, index, realIndex) {
@@ -473,7 +484,7 @@ class _BasicColorState extends State<BasicColor> {
     );
   }
 
-  void _openFileExplorer() async {
+  Future<List<File>> _openFileExplorer() async {
     files.clear();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -483,33 +494,25 @@ class _BasicColorState extends State<BasicColor> {
 
     if (result != null) {
       files = result.paths.map((path) => File(path!)).toList();
-      //PlatformFile file = result.files.first;
-
-      // setState(() {
-      //   for (File file in files) {
-      //     _selectedFiles += file.path.split('\\').last + ', ';
-      //   }
-      // });
     } else {
       // User canceled the picker
     }
+    return files;
   }
 
-  Future saveImage() async {
-    // path =
-    //     'D:/Sadi/FlutterProjects/Flutter_Desktop_Application-main/assets/Colors/${color.text}';
-    if (files.isEmpty) return;
+  Future<int> saveImage() async {
+    if (files.isEmpty) return 0;
     String path = colors[_index].dir;
 
     final newDir = await Directory(path).create(recursive: true);
 
     for (File file in files) {
       await file.copy('${newDir.path}/${file.path.split('\\').last}');
+      colors[_index]
+          .imgList
+          .add('${newDir.path}/${file.path.split('\\').last}');
     }
-    // await audio.copy('$audioPath/${audio.path.split('\\').last}');
-    //audio = File(audioPath + '/' + audio.path.split('\\').last);
-
-    //createNoun(imagePath);
+    return 1;
   }
 
   Future<void> deleteImage(int ind) async {
