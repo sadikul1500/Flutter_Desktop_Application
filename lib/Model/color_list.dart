@@ -30,6 +30,13 @@ class ColorItem extends HiveObject {
     return imgList;
   }
 
+  void updateImgList() {
+    imgList.clear();
+    listDir(dir).then((data) {
+      imgList = data;
+    });
+  }
+
   Future listDir(String folderPath) async {
     var directory = Directory(folderPath);
     //print(directory);
