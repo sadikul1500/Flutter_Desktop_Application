@@ -270,7 +270,7 @@ class _BasicColorState extends State<BasicColor> {
                     .then((value) => setState(() {}));
               },
               icon: const Icon(Icons.add),
-              label: const Text('Add a Noun',
+              label: const Text('Add a Color',
                   style: TextStyle(
                     fontSize: 18,
                   )),
@@ -327,6 +327,7 @@ class _BasicColorState extends State<BasicColor> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       IconButton(
+                          tooltip: 'Add an image',
                           color: theme[colors[_index].text],
                           onPressed: () {
                             setState(() {
@@ -345,6 +346,7 @@ class _BasicColorState extends State<BasicColor> {
                           },
                           icon: const Icon(Icons.add_a_photo)),
                       IconButton(
+                          tooltip: 'Delete this image',
                           color: theme[colors[_index].text],
                           //hoverColor: Colors.red[200],
                           onPressed: () {
@@ -407,9 +409,12 @@ class _BasicColorState extends State<BasicColor> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Checkbox(
-                          value: color.isSelected,
-                          onChanged: (value) {
+                      IconButton(
+                          color: theme[colors[_index].text],
+                          tooltip: color.isSelected
+                              ? 'Cancel this selection'
+                              : 'Select this colour',
+                          onPressed: () {
                             setState(() {
                               color.isSelected = !color.isSelected;
                               if (color.isSelected) {
@@ -418,14 +423,34 @@ class _BasicColorState extends State<BasicColor> {
                                 assignToStudent.remove(colors[_index]);
                               }
                             });
-                          }),
+                          },
+                          icon: color.isSelected
+                              ? const Icon(Icons.check_box_rounded)
+                              : const Icon(Icons.check_box_outline_blank)),
+                      // Checkbox(
+                      //     value: color.isSelected,
+                      //     onChanged: (value) {
+                      //       setState(() {
+                      //         color.isSelected = !color.isSelected;
+                      //         if (color.isSelected) {
+                      //           assignToStudent.add(colors[_index]);
+                      //         } else {
+                      //           assignToStudent.remove(colors[_index]);
+                      //         }
+                      //       });
+                      //     }),
                       IconButton(
+                          color: theme[colors[_index].text],
+                          tooltip: 'Remove this color',
                           onPressed: () {
                             setState(() {
                               colorList.removeItem(color);
                             });
                           },
-                          icon: const Icon(Icons.delete_forever_rounded)),
+                          icon: const Icon(Icons.delete_outline_outlined)),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.file_copy_outlined)),
                     ],
                   ),
                   Row(
@@ -553,9 +578,6 @@ class _BasicColorState extends State<BasicColor> {
       );
 
   void animateToSlide(int index) {
-    // if (index > images.length) {
-    //   index = 0;
-    // }
     try {
       _controller.animateToPage(index);
     } catch (e) {
