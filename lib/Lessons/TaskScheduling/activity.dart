@@ -1,5 +1,5 @@
 //currently video player is not supported by windows -- 25 ramadan
-//working now -- 
+//working now --
 import 'dart:io';
 //import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
@@ -375,6 +375,10 @@ class ActivityState extends State<Activity> {
   }
 
   void _openFileExplorer() async {
+    setState(() {
+      _selectedFiles = '';
+      files.clear();
+    });
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
