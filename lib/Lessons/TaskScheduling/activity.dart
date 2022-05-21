@@ -1,5 +1,7 @@
 //currently video player is not supported by windows -- 25 ramadan
 //working now --
+//for now work with absolute path / getApplicationDocumentsDirectory() and save videos here
+
 import 'dart:io';
 //import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
@@ -388,15 +390,43 @@ class ActivityState extends State<Activity> {
     if (result != null) {
       files = result.paths.map((path) => File(path!)).toList();
 
-      setState(() {
-        for (File file in files) {
+      for (File file in files) {
+        //_selectedFiles = (await getApplicationDocumentsDirectory()).path;
+        setState(() {
           _selectedFiles += file.path.split('\\').last + ', ';
-          medias.add(Media.file(file));
-        }
-      });
+        });
+        await saveVideo(file);
+
+        //medias.add(Media.file(file));
+      }
     } else {
       // User canceled the picker
     }
+  }
+
+  Future saveVideo(File file) async {
+    const String path =
+        'D:/Sadi/FlutterProjects/Flutter_Desktop_Application-main/assets/Videos';
+
+    ///$fileName';
+
+    //final newDir = await Directory(path).create(recursive: true);
+    try {
+      await file.copy('$path/${file.path.split('\\').last}');
+    } catch (exception) {
+      throw Exception();
+    }
+    setState(() {
+      medias.add(Media.file(File('$path/${file.path.split('\\').last}')));
+    });
+
+    // for (File file in files) {
+    //   await file.copy('${newDir.path}/${file.path.split('\\').last}');
+    // }
+    //await audio.copy('$audioPath/${audio.path.split('\\').last}');
+    //audio = File(audioPath + '/' + audio.path.split('\\').last);
+
+    //createNoun(imagePath);
   }
 
   Widget _playlist(BuildContext context) {
