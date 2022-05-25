@@ -8,7 +8,7 @@ import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_card.dart';
 //import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle_card.dart';
 
 class JigsawPuzzleDataGenerator {
-  static List<JigsawPuzzleData> _3x2dataList = [
+  static final List<JigsawPuzzleData> _3x2dataList = [
     /// row 1
     JigsawPuzzleData(
       width: 208,
@@ -96,16 +96,16 @@ class JigsawPuzzleDataGenerator {
     if (image == null) {
       return map;
     }
-    _3x2dataList.forEach((data) {
+    for (var data in _3x2dataList) {
       if (correctIdList.contains(data.id())) {
-        return;
+        continue;
       }
       map[data.id()] = DraggableJigsawPuzzleCardWidget(
         key: Key(data.id().toString()),
         data: data,
         srcImage: image,
       );
-    });
+    }
     return map;
   }
 }
