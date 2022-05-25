@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle.dart';
 import 'package:kids_learning_tool/Quiz/Puzzle/jigsaw_puzzle_card_placeholder.dart';
 //import 'package:jigsaw_puzzle_demo/jigsaw_puzzle/jigsaw_puzzle.dart';
@@ -214,7 +213,9 @@ class _JigsawPuzzleCardPainter extends CustomPainter {
     canvas.drawPath(path, paint);
     paint.blendMode = BlendMode.srcIn;
     if (!active) {
-      paint.colorFilter = const ColorFilter.mode(Colors.grey, BlendMode.color);
+      paint.colorFilter =
+          ColorFilter.mode(Colors.white.withOpacity(.7), BlendMode.modulate);
+      //ColorFilter.mode(Colors.grey.shade200, BlendMode.color);
     }
 
     canvas.drawImageRect(
@@ -240,9 +241,10 @@ class _JigsawPuzzleCardPainter extends CustomPainter {
   }
 
   void _drawCover(Canvas canvas) {
+    //needCoder is for covering main image while dropping on it
     if (needCover) {
       Paint paint = Paint()
-        ..color = Colors.black12
+        ..color = Colors.black26
         ..style = PaintingStyle.fill
         ..isAntiAlias = true;
       canvas.drawPath(path, paint);
