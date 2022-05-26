@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 //import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +28,7 @@ class _DragState extends State<Drag> {
   bool gameOver = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
   late ConfettiController _confettiController;
-  bool _isPlaying = false;
+  final bool _isPlaying = false;
   //PlayerState? _state;
 
   //final assetsAudioPlayer = AssetsAudioPlayer();
@@ -40,17 +39,17 @@ class _DragState extends State<Drag> {
     initDrag();
   }
 
-  // @override
-  // void dispose() {
-  //   _audioPlayer.dispose();
-  //   _confettiController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    _confettiController.dispose();
+    super.dispose();
+  }
 
   initDrag() {
     score = 0;
     gameOver = false;
-    _audioPlayer.setAsset('assets/Audios/win.wav', preload: true);
+    _audioPlayer.setAsset('assets/Audios/win.wav');
 
     ///_audioPlayer.
     _confettiController = ConfettiController();
@@ -162,19 +161,23 @@ class _DragState extends State<Drag> {
                         return Container(
                           margin: const EdgeInsets.fromLTRB(25, 10, 100, 8.0),
                           child: DragTarget<ItemModel>(
-                            onAccept: (receivedItem) async {
+                            onAccept: (receivedItem) {
                               if (item.value ==
                                   receivedItem.value.split(' ').last) {
                                 //_audioPlayer.stop();
-                                _audioPlayer.play();
+                                //_audioPlayer.play();
                                 setState(() {
+                                  _audioPlayer.seek(Duration.zero);
+                                  // _audioPlayer.setAsset('assets/Audios/win.wav',
+                                  //     preload: true);
                                   widget.items1.remove(receivedItem);
-                                  //items2.remove(item);
+                                  widget.items2.remove(item);
                                   //dispose();
                                   score += 1;
                                   item.accepting = false;
                                   //_audioPlayer.dispose();
                                 });
+                                _audioPlayer.play();
                                 //_audioPlayer.stop();
                               } else {
                                 setState(() {
@@ -222,9 +225,9 @@ class _DragState extends State<Drag> {
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                          fontSize: 30,
                         )),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     Align(
                       alignment: Alignment.center,
                       child: ConfettiWidget(
@@ -244,14 +247,14 @@ class _DragState extends State<Drag> {
                             drawStar, // define a custom shape/path.
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     Center(
                       child: SizedBox(
                           height: 200,
                           width: 250,
                           child: Image.file(
                             File(
-                                'D:/Sadi/FlutterProjects/kids_learning_tool/assets/Rewards/congrats2.gif'),
+                                'D:/Sadi/FlutterProjects/Flutter_Desktop_Application-main/assets/Rewards/congrats2.gif'),
                             fit: BoxFit.contain,
                             filterQuality: FilterQuality.high,
                           )),
