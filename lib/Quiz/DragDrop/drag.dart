@@ -26,9 +26,11 @@ class _DragState extends State<Drag> {
   int score = 0;
   //int total = 0;
   bool gameOver = false;
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  late ConfettiController _confettiController;
-  final bool _isPlaying = false;
+  AudioPlayer audioPlayer = AudioPlayer();
+  late ConfettiController _confettiController, _smallConfettiController;
+
+  //bool _isPlaying = false;
+  bool playConfetti = false;
   //PlayerState? _state;
 
   //final assetsAudioPlayer = AssetsAudioPlayer();
@@ -41,18 +43,20 @@ class _DragState extends State<Drag> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    audioPlayer.dispose();
     _confettiController.dispose();
+    _smallConfettiController.dispose();
     super.dispose();
   }
 
   initDrag() {
     score = 0;
     gameOver = false;
-    _audioPlayer.setAsset('assets/Audios/win.wav');
+    audioPlayer.setAsset('assets/Audios/win.wav');
 
     ///_audioPlayer.
     _confettiController = ConfettiController();
+    _smallConfettiController = ConfettiController();
 
     widget.items1.shuffle();
     widget.items2.shuffle();
@@ -132,6 +136,7 @@ class _DragState extends State<Drag> {
                                   File(item.value.split(' ').first),
                                   fit: BoxFit.contain,
                                   filterQuality: FilterQuality.high,
+                                  //colorBlendMode: BlendMode.darken,
                                 )),
                             feedback: SizedBox(
                                 height: 100,
@@ -155,6 +160,9 @@ class _DragState extends State<Drag> {
                     ),
                     //const Spacer(),
                     //const Text('hi'),
+                    playConfetti
+                        ? _confetti(_smallConfettiController, true)
+                        : const SizedBox(width: 0),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: widget.items2.map((item) {
@@ -167,7 +175,9 @@ class _DragState extends State<Drag> {
                                 //_audioPlayer.stop();
                                 //_audioPlayer.play();
                                 setState(() {
-                                  _audioPlayer.seek(Duration.zero);
+                                  playConfetti = true;
+                                  _smallConfettiController.play();
+                                  audioPlayer.seek(Duration.zero);
                                   // _audioPlayer.setAsset('assets/Audios/win.wav',
                                   //     preload: true);
                                   widget.items1.remove(receivedItem);
@@ -177,25 +187,34 @@ class _DragState extends State<Drag> {
                                   item.accepting = false;
                                   //_audioPlayer.dispose();
                                 });
-                                _audioPlayer.play();
+
+                                audioPlayer.play();
+                                Future.delayed(
+                                    const Duration(milliseconds: 700), () {
+                                  setState(() {
+                                    playConfetti = false;
+                                  });
+                                });
+                                //_confetti(false);
                                 //_audioPlayer.stop();
                               } else {
                                 setState(() {
                                   //score -= 1;
                                   item.accepting = false;
+                                  playConfetti = false;
                                 });
                               }
                             },
                             onLeave: (receivedItem) {
                               setState(() {
                                 item.accepting = false;
-                                //_audioPlayer.stop();
+                                playConfetti = false;
                               });
                             },
                             onWillAccept: (receivedItem) {
                               setState(() {
                                 item.accepting = true;
-                                //_audioPlayer.stop();
+                                playConfetti = false;
                               });
                               return true;
                             },
@@ -228,30 +247,12 @@ class _DragState extends State<Drag> {
                           fontSize: 30,
                         )),
                     const SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.center,
-                      child: ConfettiWidget(
-                        confettiController: _confettiController,
-                        blastDirectionality: BlastDirectionality
-                            .explosive, // don't specify a direction, blast randomly
-                        shouldLoop:
-                            true, // start again as soon as the animation is finished
-                        colors: const [
-                          Colors.green,
-                          Colors.blue,
-                          Colors.pink,
-                          Colors.orange,
-                          Colors.purple
-                        ], // manually specify the colors to be used
-                        createParticlePath:
-                            drawStar, // define a custom shape/path.
-                      ),
-                    ),
+                    _confetti(_confettiController, true),
                     const SizedBox(height: 30),
                     Center(
                       child: SizedBox(
-                          height: 200,
-                          width: 250,
+                          height: 250,
+                          width: 300,
                           child: Image.file(
                             File(
                                 'D:/Sadi/FlutterProjects/Flutter_Desktop_Application-main/assets/Rewards/congrats2.gif'),
@@ -281,6 +282,26 @@ class _DragState extends State<Drag> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _confetti(ConfettiController confettiController, bool loop) {
+    return Align(
+      alignment: Alignment.center,
+      child: ConfettiWidget(
+        confettiController: confettiController,
+        blastDirectionality: BlastDirectionality.explosive,
+        // don't specify a direction, blast randomly
+        shouldLoop: loop, // start again as soon as the animation is finished
+        colors: const [
+          Colors.green,
+          Colors.blue,
+          Colors.pink,
+          Colors.orange,
+          Colors.purple
+        ], // manually specify the colors to be used
+        createParticlePath: drawStar, // define a custom shape/path.
       ),
     );
   }
