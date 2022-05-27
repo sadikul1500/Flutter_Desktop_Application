@@ -177,43 +177,43 @@ class DragFormState extends State<MyStatefulWidget> {
                   //
                   //
                   //
-                  const Text(
-                    'Add Drag Traget Objects',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 32.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            width: 390,
-                            height: 25,
-                            child: TextFormField(
-                              controller: _valueController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Enter value to match'),
-                              validator: (v) {
-                                if (v!.trim().isEmpty) {
-                                  return 'Please enter something';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          _addRemoveButtonAgain(true, 0),
-                        ]),
-                  ),
-                  const SizedBox(height: 20),
-                  ..._getValuesRight(),
-                  const SizedBox(height: 20),
+                  // const Text(
+                  //   'Add Drag Traget Objects',
+                  //   style: TextStyle(
+                  //     fontWeight: FontWeight.w700,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(right: 32.0),
+                  //   child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: <Widget>[
+                  //         SizedBox(
+                  //           width: 390,
+                  //           height: 25,
+                  //           child: TextFormField(
+                  //             controller: _valueController,
+                  //             decoration: const InputDecoration(
+                  //                 hintText: 'Enter value to match'),
+                  //             validator: (v) {
+                  //               if (v!.trim().isEmpty) {
+                  //                 return 'Please enter something';
+                  //               }
+                  //               return null;
+                  //             },
+                  //           ),
+                  //         ),
+                  //         const SizedBox(width: 20),
+                  //         _addRemoveButtonAgain(true, 0),
+                  //       ]),
+                  // ),
+                  // const SizedBox(height: 20),
+                  // ..._getValuesRight(),
+                  // const SizedBox(height: 20),
                   //
                   //
                   //
@@ -418,7 +418,9 @@ class DragFormState extends State<MyStatefulWidget> {
       onTap: () {
         if (add) {
           // add new text-fields at the top of all friends textfields
-          values.add(_nameController.text.trim());
+          String value = _nameController.text.trim();
+          values.add(value);
+          valuesRight.add(value);
           friendsList.add(
               files.last.path.split('\\').last + ' ; ' + values.last); //0, ''
 
@@ -432,6 +434,7 @@ class DragFormState extends State<MyStatefulWidget> {
           friendsList.removeAt(index);
           files.removeAt(index);
           values.removeAt(index);
+          valuesRight.removeAt(index);
         }
         setState(() {});
       },
