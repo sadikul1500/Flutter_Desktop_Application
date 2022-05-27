@@ -27,7 +27,10 @@ class _DragState extends State<Drag> {
   //int total = 0;
   bool gameOver = false;
   AudioPlayer audioPlayer = AudioPlayer();
-  late ConfettiController _confettiController, _smallConfettiController;
+  late ConfettiController _confettiController,
+      _smallConfettiController,
+      _confettiRightController,
+      _confettiLeftController;
 
   //bool _isPlaying = false;
   bool playConfetti = false;
@@ -56,7 +59,12 @@ class _DragState extends State<Drag> {
 
     ///_audioPlayer.
     _confettiController = ConfettiController();
-    _smallConfettiController = ConfettiController();
+    _smallConfettiController =
+        ConfettiController(duration: const Duration(seconds: 1));
+    _confettiRightController =
+        ConfettiController(duration: const Duration(seconds: 1));
+    _confettiLeftController =
+        ConfettiController(duration: const Duration(seconds: 1));
 
     widget.items1.shuffle();
     widget.items2.shuffle();
@@ -122,6 +130,21 @@ class _DragState extends State<Drag> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    //CENTER LEFT -- Emit right
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: ConfettiWidget(
+                        confettiController: _confettiLeftController,
+                        blastDirection: 0, // radial value - RIGHT
+                        emissionFrequency: 0.09,
+                        minimumSize: const Size(8,
+                            8), // set the minimum potential size for the confetti (width, height)
+                        maximumSize: const Size(18,
+                            18), // set the maximum potential size for the confetti (width, height)
+                        numberOfParticles: 7,
+                        gravity: 0.1,
+                      ),
+                    ),
                     Column(
                       children: widget.items1.map((item) {
                         return Container(
@@ -160,9 +183,28 @@ class _DragState extends State<Drag> {
                     ),
                     //const Spacer(),
                     //const Text('hi'),
-                    playConfetti
-                        ? _confetti(_smallConfettiController, true)
-                        : const SizedBox(width: 0),
+                    // playConfetti
+                    //     ? _confetti(_smallConfettiController, false)
+                    //     : const SizedBox(width: 0),
+                    Align(
+                      alignment: Alignment.center,
+                      child: ConfettiWidget(
+                        confettiController: _smallConfettiController,
+                        blastDirectionality: BlastDirectionality.explosive,
+                        // don't specify a direction, blast randomly
+                        shouldLoop:
+                            false, // start again as soon as the animation is finished
+                        colors: const [
+                          Colors.green,
+                          Colors.blue,
+                          Colors.pink,
+                          Colors.orange,
+                          Colors.purple
+                        ], // manually specify the colors to be used
+                        createParticlePath:
+                            drawStar, // define a custom shape/path.
+                      ),
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: widget.items2.map((item) {
@@ -177,6 +219,8 @@ class _DragState extends State<Drag> {
                                 setState(() {
                                   playConfetti = true;
                                   _smallConfettiController.play();
+                                  _confettiRightController.play();
+                                  _confettiLeftController.play();
                                   audioPlayer.seek(Duration.zero);
                                   // _audioPlayer.setAsset('assets/Audios/win.wav',
                                   //     preload: true);
@@ -189,12 +233,12 @@ class _DragState extends State<Drag> {
                                 });
 
                                 audioPlayer.play();
-                                Future.delayed(
-                                    const Duration(milliseconds: 700), () {
-                                  setState(() {
-                                    playConfetti = false;
-                                  });
-                                });
+                                // Future.delayed(
+                                //     const Duration(milliseconds: 700), () {
+                                //   setState(() {
+                                //     playConfetti = false;
+                                //   });
+                                // });
                                 //_confetti(false);
                                 //_audioPlayer.stop();
                               } else {
@@ -234,7 +278,27 @@ class _DragState extends State<Drag> {
                           ),
                         );
                       }).toList(),
-                    )
+                    ),
+                    //CENTER RIGHT -- Emit left
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ConfettiWidget(
+                        confettiController: _confettiRightController,
+                        blastDirection: pi, // radial value - LEFT
+                        particleDrag: 0.05, // apply drag to the confetti
+                        emissionFrequency: 0.09, // how often it should emit
+                        numberOfParticles: 7, // number of particles to emit
+                        gravity: 0.1, // gravity - or fall speed
+                        shouldLoop: false,
+                        colors: const [
+                          Colors.green,
+                          Colors.blue,
+                          Colors.pink
+                        ], // manually specify the colors to be used
+                        // strokeWidth: 1,
+                        // strokeColor: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               if (gameOver)
@@ -247,7 +311,7 @@ class _DragState extends State<Drag> {
                           fontSize: 30,
                         )),
                     const SizedBox(height: 30),
-                    _confetti(_confettiController, true),
+                    //_confetti(_confettiController, true),
                     const SizedBox(height: 30),
                     Center(
                       child: SizedBox(
@@ -287,23 +351,49 @@ class _DragState extends State<Drag> {
   }
 
   Widget _confetti(ConfettiController confettiController, bool loop) {
-    return Align(
-      alignment: Alignment.center,
-      child: ConfettiWidget(
-        confettiController: confettiController,
-        blastDirectionality: BlastDirectionality.explosive,
-        // don't specify a direction, blast randomly
-        shouldLoop: loop, // start again as soon as the animation is finished
-        colors: const [
-          Colors.green,
-          Colors.blue,
-          Colors.pink,
-          Colors.orange,
-          Colors.purple
-        ], // manually specify the colors to be used
-        createParticlePath: drawStar, // define a custom shape/path.
-      ),
-    );
+    return SafeArea(
+        child: Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.center,
+          child: ConfettiWidget(
+            confettiController: confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            // don't specify a direction, blast randomly
+            shouldLoop:
+                loop, // start again as soon as the animation is finished
+            colors: const [
+              Colors.green,
+              Colors.blue,
+              Colors.pink,
+              Colors.orange,
+              Colors.purple
+            ], // manually specify the colors to be used
+            createParticlePath: drawStar, // define a custom shape/path.
+          ),
+        ),
+        //CENTER RIGHT -- Emit left
+        Align(
+          alignment: Alignment.centerRight,
+          child: ConfettiWidget(
+            confettiController: _confettiRightController,
+            blastDirection: pi, // radial value - LEFT
+            particleDrag: 0.05, // apply drag to the confetti
+            emissionFrequency: 0.05, // how often it should emit
+            numberOfParticles: 20, // number of particles to emit
+            gravity: 0.05, // gravity - or fall speed
+            shouldLoop: false,
+            colors: const [
+              Colors.green,
+              Colors.blue,
+              Colors.pink
+            ], // manually specify the colors to be used
+            // strokeWidth: 1,
+            // strokeColor: Colors.white,
+          ),
+        ),
+      ],
+    ));
   }
 }
 
